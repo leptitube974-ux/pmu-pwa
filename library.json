@@ -19,6 +19,106 @@
         "Moins de chaos que 2100",
         "Les chevaux durs sont favorisés"
       ]
+    },
+    {
+      "id": "vincennes_2850_gp",
+      "titre": "Vincennes — 2850 m Grande Piste",
+      "details": [
+        "Parcours de tenue",
+        "Scénario très important",
+        "Les attentistes peuvent revenir",
+        "Sélection par l’effort"
+      ]
+    },
+    {
+      "id": "vincennes_2100_volte",
+      "titre": "Vincennes — 2100 m Volte",
+      "details": [
+        "Départ délicat",
+        "Importance du sang-froid",
+        "Risque de faux rythme",
+        "Avantage aux chevaux maniables"
+      ]
+    },
+    {
+      "id": "enghien_2150_auto",
+      "titre": "Enghien — 2150 m Autostart",
+      "details": [
+        "Piste plate",
+        "Numéros très importants",
+        "Vitesse déterminante",
+        "Peu de retour de l’arrière"
+      ]
+    },
+    {
+      "id": "enghien_2875",
+      "titre": "Enghien — 2875 m",
+      "details": [
+        "Tenue nécessaire",
+        "Train régulier",
+        "Peu d’aléas",
+        "Course souvent limpide"
+      ]
+    },
+    {
+      "id": "cagnes_2925",
+      "titre": "Cagnes-sur-Mer — 2925 m",
+      "details": [
+        "Tenue primordiale",
+        "Dernier effort long décisif",
+        "Beaucoup d’aléas",
+        "Profils combatifs favorisés"
+      ]
+    },
+    {
+      "id": "cagnes_2150_auto",
+      "titre": "Cagnes-sur-Mer — 2150 m Autostart",
+      "details": [
+        "Piste corde à gauche",
+        "Départ capital",
+        "Avantage aux chevaux rapides",
+        "Attention aux parcours cachés"
+      ]
+    },
+    {
+      "id": "caen_2450",
+      "titre": "Caen — 2450 m",
+      "details": [
+        "Piste sélective",
+        "Tenue + vitesse",
+        "Peu de départs voltes piégeux",
+        "Chevaux bien placés avantagés"
+      ]
+    },
+    {
+      "id": "angers_2350",
+      "titre": "Angers — 2350 m",
+      "details": [
+        "Piste corde à droite",
+        "Profil provincial",
+        "Importance du train",
+        "Outsiders possibles"
+      ]
+    },
+    {
+      "id": "laval_2850",
+      "titre": "Laval — 2850 m",
+      "details": [
+        "Parcours de tenue",
+        "Peu de virages",
+        "Rythme souvent régulier",
+        "Chevaux sérieux avantagés"
+      ]
+    },
+    {
+      "id": "cherbourg_2625",
+      "titre": "Cherbourg — 2625 m",
+      "details": [
+        "Piste corde à droite",
+        "Effort final décisif",
+        "Aléas possibles",
+        "Attention aux attentistes"
+      ]
     }
   ]
 }
