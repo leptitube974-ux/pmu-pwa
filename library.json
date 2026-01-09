@@ -34,34 +34,32 @@
       "id": "vincennes_2100_volte",
       "titre": "Vincennes — 2100 m Volte",
       "details": [
-        "Départ volté : discipline au départ (risque de faute)",
-        "Moins “numéro-dépendant” que l’autostart",
-        "Placement et déroulement de course très importants",
-        "Course souvent plus tactique"
+        "Départ délicat : vigilance sur les allures",
+        "Placement et maniabilité importants",
+        "Rythme peut être haché",
+        "Désavantage aux chevaux fautifs"
       ]
     },
-
     {
       "id": "enghien_2150_autostart",
       "titre": "Enghien — 2150 m Autostart",
       "details": [
-        "Vitesse + numéro derrière l’autostart importants",
-        "Parcours souvent rythmé",
-        "Attention aux chevaux capables d’un bon dernier 500 m",
-        "Les bons dos peuvent faire la différence"
+        "Départ très important",
+        "Parcours souvent rapide",
+        "Position/numéro derrière l’autostart déterminant",
+        "Attention aux chevaux de vitesse"
       ]
     },
     {
       "id": "enghien_2875",
       "titre": "Enghien — 2875 m",
       "details": [
-        "Tenue importante",
-        "Course plus sélective qu’un sprint",
-        "Scénario : train / relais décisifs",
-        "Avantage aux chevaux capables d’un effort long"
+        "Tenue + pointe finale",
+        "Course moins explosive que 2150",
+        "Bon dos important",
+        "Attentistes dangereux si train régulier"
       ]
     },
-
     {
       "id": "cagnes_2925",
       "titre": "Cagnes-sur-Mer — 2925 m",
@@ -76,51 +74,50 @@
       "id": "cagnes_2150_autostart",
       "titre": "Cagnes-sur-Mer — 2150 m Autostart",
       "details": [
-        "Autostart : numéro + mise en jambes importants",
-        "Vitesse primordiale",
-        "Trafic possible : attention aux parcours cachés",
-        "Les chevaux capables d’accélérer fort font la différence"
+        "Vitesse + départ déterminants",
+        "Risque d’aléas dans le premier tournant",
+        "Chevaux bien placés favorisés",
+        "Attention aux parcours piégés"
       ]
     },
-
     {
       "id": "caen_2450",
       "titre": "Caen — 2450 m",
       "details": [
-        "Parcours intermédiaire : tenue + vitesse",
-        "Scénario important (train régulier vs à-coups)",
-        "Les chevaux bien placés tôt sont avantagés",
-        "Dernier kilomètre souvent décisif"
+        "Parcours de tenue",
+        "Train régulier souvent favorable aux durs",
+        "Placement important dans les tournants",
+        "Attentistes possibles si rythme soutenu"
       ]
     },
     {
       "id": "angers_2350",
       "titre": "Angers — 2350 m",
       "details": [
-        "Piste corde à gauche : profils à l’aise à gauche",
-        "Course tactique : placement important",
-        "Tenue correcte nécessaire",
-        "Attention aux chevaux capables d’un effort final"
+        "Tenue + maniabilité",
+        "Course souvent tactique",
+        "Important d’être bien placé à l’entrée de ligne droite",
+        "Outsiders possibles si rythme irrégulier"
       ]
     },
     {
       "id": "laval_2850",
       "titre": "Laval — 2850 m",
       "details": [
-        "Tenue importante",
-        "Course souvent régulière",
-        "Scénario : bon parcours indispensable",
-        "Les finisseurs peuvent venir si train soutenu"
+        "Tenue indispensable",
+        "Course souvent sélective à partir du dernier km",
+        "Chevaux capables de maintenir un effort long",
+        "Vigilance sur le parcours caché"
       ]
     },
     {
       "id": "cherbourg_2625",
       "titre": "Cherbourg — 2625 m",
       "details": [
-        "Distance de tenue",
-        "Parcours souvent tactique",
-        "Placement et rythme décisifs",
-        "Profil dur et régulier souvent avantagé"
+        "Parcours de tenue",
+        "Scénario et placement importants",
+        "Chevaux endurants avantagés",
+        "Risque d’aléas si course mal rythmée"
       ]
     }
   ]
