@@ -22,15 +22,15 @@
   app.innerHTML = `
     <h1>PMU — Bibliothèque Hippodromes</h1>
 
-    <div style="display:flex; gap:10px; align-items:center; margin:14px 0 8px 0;">
+    <div style="display:flex; gap:10px; align-items:flex-end; margin:14px 0 10px 0;">
       <div style="flex:1;">
         <label class="label" for="hippoSelect">Choisir un hippodrome</label>
         <select id="hippoSelect">
           <option value="all">Tous les hippodromes</option>
         </select>
       </div>
+
       <button id="resetBtn" style="
-        margin-top:22px;
         padding:12px 14px;
         border-radius:14px;
         border:1px solid rgba(255,255,255,.12);
@@ -59,7 +59,6 @@
   }
 
   function renderCards(items) {
-    // IMPORTANT : on REMPLACE toujours tout
     list.innerHTML = "";
 
     if (!items || !items.length) {
@@ -67,8 +66,9 @@
       return;
     }
 
+    // Cartes "statique" : pas d'accordéon, pas de clic
     const html = items.map(h => `
-      <div class="card">
+      <div class="card static-card">
         <div class="title">${escapeHtml(h.titre)}</div>
         <ul>
           ${(h.details || []).map(d => `<li>${escapeHtml(d)}</li>`).join("")}
@@ -79,7 +79,6 @@
     list.innerHTML = html;
   }
 
-  // fetch avec "cache bust" pour éviter l'ancien JS/JSON en cache
   let data;
   try {
     const res = await fetch("./library.json?v=" + Date.now(), { cache: "no-store" });
@@ -116,11 +115,8 @@
 
   // Init depuis URL
   const initial = getQuery("h") || "all";
-  if ([...select.options].some(o => o.value === initial)) {
-    select.value = initial;
-  } else {
-    select.value = "all";
-  }
+  if ([...select.options].some(o => o.value === initial)) select.value = initial;
+  else select.value = "all";
 
   select.addEventListener("change", applyFilter);
 
