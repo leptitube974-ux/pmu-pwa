@@ -1,5 +1,53 @@
 {
-  "profiles": [
+  "profiles": [,
+{
+  "hippodrome": "Enghien",
+  "parcours": "2150 m Autostart",
+  "rules_text": [
+    "Vitesse + placement = clé",
+    "Numéros derrière l’autostart : impact important",
+    "Course souvent rythmée (moins d’attentisme qu’à Vincennes)",
+    "Attention aux chevaux qui peuvent aller devant sans s’user"
+  ]
+},
+{
+  "hippodrome": "Cabourg",
+  "parcours": "2050 m Autostart",
+  "rules_text": [
+    "Piste corde à droite : vérifier l’aptitude",
+    "Vitesse au départ primordiale",
+    "Parcours souvent piégeux si tu subis",
+    "Profil sprinter favorisé"
+  ]
+},
+{
+  "hippodrome": "Caen",
+  "parcours": "2450 m",
+  "rules_text": [
+    "Piste corde à droite : avantage aux confirmés à droite",
+    "Tenue nécessaire mais rythme souvent soutenu",
+    "Les chevaux capables d’un dernier effort long sont précieux",
+    "Attention aux parcours à l’économie : ça revient souvent"
+  ]
+},
+{
+  "hippodrome": "Laval",
+  "parcours": "2850 m",
+  "rules_text": [
+    "Piste corde à droite : aptitude importante",
+    "Course souvent de tenue, rythme variable",
+    "Les chevaux durs/endurants sont à privilégier",
+    "Le scénario (train régulier vs à-coups) change tout"
+  ]
+},
+{
+  "hippodrome": "Marseille-Borély",
+  "parcours": "2300–2400 m",
+  "rules_text": [
+    "Corde à gauche (souvent) : vérifier selon la course",
+    "Rythme parfois irrégulier → aléas possibles",
+    "Attention aux chevaux qui voyagent mal",
+    "Les bons finishers peuvent surprendre si ça roule
     {
       "id": "vin_2100_auto",
       "hippodrome": "Vincennes",
