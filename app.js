@@ -1,24 +1,26 @@
-async function loadLibrary() {
-  const res = await fetch("library.json");
+(async function () {
+  const root = document.getElementById("app");
+
+  // Style pour éviter la sélection de texte + rendre cliquable
+  const style = document.createElement("style");
+  style.textContent = `
+    .card { user-select:none; -webkit-user-select:none; cursor:pointer; }
+    .details { display:none; margin-top:10px; font-size:14px; color:#d1d5db; line-height:1.4; }
+    .card.open .details { display:block; }
+  `;
+  document.head.appendChild(style);
+
+  // Charge la bibliothèque
+  const res = await fetch("library.json", { cache: "no-store" });
   const data = await res.json();
 
-  const app = document.getElementById("app");
-  app.innerHTML = "";
+  // Affiche les cartes
+  root.innerHTML = `
+    <h1>PMU – Bibliothèque Hippodromes</h1>
+    <div id="list"></div>
+  `;
 
-  data.profiles.forEach(p => {
-    const div = document.createElement("div");
-    div.style.border = "1px solid #1f2937";
-    div.style.borderRadius = "12px";
-    div.style.padding = "10px";
-    div.style.marginBottom = "10px";
+  const list = document.getElementById("list");
 
-    div.innerHTML = `
-      <strong>${p.hippodrome}</strong> – ${p.parcours}<br>
-      <small>${p.rules_text.join(" • ")}</small>
-    `;
-
-    app.appendChild(div);
-  });
-}
-
-document.addEventListener("DOMContentLoaded", loadLibrary);
+  data.profiles.forEach((p) => {
+    const card = document.createElement("
