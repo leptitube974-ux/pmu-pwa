@@ -1,45 +1,102 @@
-async function loadLibrary() {
-  const container = document.getElementById("cards");
-  container.innerHTML = "<p style='opacity:.8'>Chargement…</p>";
+(async function () {
+  const app = document.getElementById("app");
 
-  try {
-    const res = await fetch("./library.json?v=" + Date.now());
-    if (!res.ok) throw new Error("Erreur chargement library.json");
-    const data = await res.json();
+  const escapeHtml = (s) =>
+    String(s).replace(/[&<>"']/g, (m) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    }[m]));
 
-    container.innerHTML = "";
-    (data.hippodromes || []).forEach((h) => {
-      const card = document.createElement("div");
-      card.className = "card";
+  const setQuery = (key, value) => {
+    const url = new URL(window.location.href);
+    if (!value || value === "all") url.searchParams.delete(key);
+    else url.searchParams.set(key, value);
+    window.history.replaceState({}, "", url.toString());
+  };
 
-      const header = document.createElement("button");
-      header.className = "card-header";
-      header.type = "button";
-      header.innerText = h.titre || "Hippodrome";
-      header.onclick = () => {
-        body.classList.toggle("open");
-      };
+  const getQuery = (key) => {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(key);
+  };
 
-      const body = document.createElement("div");
-      body.className = "card-body";
+  app.innerHTML = `
+    <h1>PMU — Bibliothèque Hippodromes</h1>
 
-      const ul = document.createElement("ul");
-      (h.details || []).forEach((d) => {
-        const li = document.createElement("li");
-        li.textContent = d;
-        ul.appendChild(li);
-      });
+    <label class="label" for="hippoSelect">Choisir un hippodrome</label>
+    <select id="hippoSelect">
+      <option value="all">Tous les hippodromes</option>
+    </select>
 
-      body.appendChild(ul);
-      card.appendChild(header);
-      card.appendChild(body);
-      container.appendChild(card);
-    });
-  } catch (e) {
-    container.innerHTML =
-      "<p style='color:#ffb4b4'>Erreur : library.json invalide ou introuvable.</p>";
-    console.error(e);
+    <div id="list"></div>
+    <div id="err" class="error" style="display:none;"></div>
+  `;
+
+  const select = document.getElementById("hippoSelect");
+  const list = document.getElementById("list");
+  const err = document.getElementById("err");
+
+  function showError(msg) {
+    err.style.display = "block";
+    err.textContent = msg;
   }
-}
 
-loadLibrary();
+  function renderCards(items) {
+    if (!items.length) {
+      list.innerHTML = `<p style="opacity:.85;">Aucun hippodrome trouvé.</p>`;
+      return;
+    }
+
+    list.innerHTML = items.map(h => `
+      <div class="card">
+        <div class="title">${escapeHtml(h.titre)}</div>
+        <ul>
+          ${(h.details || []).map(d => `<li>${escapeHtml(d)}</li>`).join("")}
+        </ul>
+      </div>
+    `).join("");
+  }
+
+  let data;
+  try {
+    const res = await fetch("./library.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("library.json introuvable");
+    data = await res.json();
+  } catch (e) {
+    showError("Erreur : library.json invalide ou introuvable.");
+    return;
+  }
+
+  const hippodromes = Array.isArray(data.hippodromes) ? data.hippodromes : [];
+
+  // Remplit le menu déroulant
+  hippodromes.forEach((h) => {
+    const opt = document.createElement("option");
+    opt.value = h.id;
+    opt.textContent = h.titre;
+    select.appendChild(opt);
+  });
+
+  // Si on a un paramètre d'URL ?h=...
+  const initial = getQuery("h") || "all";
+  if ([...select.options].some(o => o.value === initial)) select.value = initial;
+
+  function applyFilter() {
+    const value = select.value;
+    setQuery("h", value);
+
+    if (value === "all") {
+      renderCards(hippodromes);
+      return;
+    }
+    const found = hippodromes.find(h => h.id === value);
+    renderCards(found ? [found] : []);
+  }
+
+  select.addEventListener("change", applyFilter);
+
+  // Premier affichage
+  applyFilter();
+})();
