@@ -1,46 +1,88 @@
 {
-  "version": 1,
-  "updated_at": "2026-01-09",
   "profiles": [
     {
-      "id": "VINCENNES_2100_AS",
+      "id": "vin_2100_auto",
       "hippodrome": "Vincennes",
-      "parcours": "2100 Autostart",
-      "discipline": "attelé",
-      "distance_m": 2100,
-      "corde": "gauche",
+      "parcours": "2100 m Autostart",
       "depart": "autostart",
       "piste": {
-        "ligne_arrivee": "courte",
-        "virages": "serres",
-        "piste_type": "vitesse",
-        "difficulte_revenir": 0.85,
-        "avantage_tete": 0.7,
-        "avantage_finisseurs": 0.35
+        "corde": "gauche",
+        "difficulte_revenir": 0.7
       },
-      "chaos_modifiers": { "base": 10, "depart_autostart": 12, "depart_volte": 0, "lot_16_plus": 10 },
-      "weights": {
-        "forme": 2.0,
-        "fiabilite": 2.2,
-        "aptitude_piste": 1.7,
-        "driver": 1.6,
-        "deferrage": 1.0,
-        "chrono": 1.7,
-        "vitesse": 2.4,
-        "numero": 1.8,
-        "tenue": 0.8,
-        "dernier_effort": 1.2,
-        "dai": -2.2,
-        "profil_reference": 6.0
+      "chaos_modifiers": {
+        "base": 10,
+        "depart_autostart": 12,
+        "lot_16_plus": 8
       },
-      "priorites_ui": ["numero", "vitesse", "chrono", "driver", "dai", "fiabilite"],
       "rules_text": [
-        "Ligne d’arrivée courte + rythme élevé : si tu es mal placé à l’entrée de la ligne, tu manques de temps pour finir.",
-        "Avantage aux chevaux capables de se placer vite (numéro/driver) et d’enchaîner.",
-        "Scénario 2 souvent pertinent : aléas autostart, placements, trafic."
+        "Départ autostart : gros impact des numéros",
+        "Vitesse primordiale",
+        "Chaos élevé si rythme haché",
+        "Attention aux chevaux bloqués à la corde"
       ]
     },
     {
-      "id": "VINCENNES_GP_2700_VOLTE",
+      "id": "vin_2700_gp",
       "hippodrome": "Vincennes",
-      "parcours": "Grande Piste 270
+      "parcours": "2700 m Grande Piste",
+      "depart": "volte",
+      "piste": {
+        "corde": "gauche",
+        "difficulte_revenir": 0.5
+      },
+      "chaos_modifiers": {
+        "base": 6,
+        "depart_volte": 6,
+        "lot_16_plus": 6
+      },
+      "rules_text": [
+        "Tenue indispensable",
+        "Course souvent sélective",
+        "Moins de chaos que 2100",
+        "Les chevaux durs sont favorisés"
+      ]
+    },
+    {
+      "id": "vin_2850_gp",
+      "hippodrome": "Vincennes",
+      "parcours": "2850 m Grande Piste",
+      "depart": "volte",
+      "piste": {
+        "corde": "gauche",
+        "difficulte_revenir": 0.6
+      },
+      "chaos_modifiers": {
+        "base": 7,
+        "depart_volte": 6,
+        "lot_16_plus": 7
+      },
+      "rules_text": [
+        "Parcours de tenue",
+        "Scénario très important",
+        "Les attentistes peuvent revenir",
+        "Sélection par l’effort"
+      ]
+    },
+    {
+      "id": "cagnes_2925",
+      "hippodrome": "Cagnes-sur-Mer",
+      "parcours": "2925 m",
+      "depart": "volte",
+      "piste": {
+        "corde": "gauche",
+        "difficulte_revenir": 0.8
+      },
+      "chaos_modifiers": {
+        "base": 9,
+        "depart_volte": 7,
+        "lot_16_plus": 8
+      },
+      "rules_text": [
+        "Tenue primordiale",
+        "Dernier effort long décisif",
+        "Beaucoup d’aléas",
+        "Profil combatif favorisé"
+      ]
+    }
+  ]
+}
