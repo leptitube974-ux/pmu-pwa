@@ -2,7 +2,7 @@
   const app = document.getElementById("app");
 
   const escapeHtml = (s) =>
-    String(s).replace(/[&<>"']/g, (m) => ({
+    String(s ?? "").replace(/[&<>"']/g, (m) => ({
       "&": "&amp;",
       "<": "&lt;",
       ">": "&gt;",
@@ -17,18 +17,28 @@
     window.history.replaceState({}, "", url.toString());
   };
 
-  const getQuery = (key) => {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(key);
-  };
+  const getQuery = (key) => new URL(window.location.href).searchParams.get(key);
 
   app.innerHTML = `
     <h1>PMU — Bibliothèque Hippodromes</h1>
 
-    <label class="label" for="hippoSelect">Choisir un hippodrome</label>
-    <select id="hippoSelect">
-      <option value="all">Tous les hippodromes</option>
-    </select>
+    <div style="display:flex; gap:10px; align-items:center; margin:14px 0 8px 0;">
+      <div style="flex:1;">
+        <label class="label" for="hippoSelect">Choisir un hippodrome</label>
+        <select id="hippoSelect">
+          <option value="all">Tous les hippodromes</option>
+        </select>
+      </div>
+      <button id="resetBtn" style="
+        margin-top:22px;
+        padding:12px 14px;
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.12);
+        background:rgba(255,255,255,.04);
+        color:#e9eef7;
+        font-size:14px;
+      ">Réinitialiser</button>
+    </div>
 
     <div id="list"></div>
     <div id="err" class="error" style="display:none;"></div>
@@ -37,19 +47,27 @@
   const select = document.getElementById("hippoSelect");
   const list = document.getElementById("list");
   const err = document.getElementById("err");
+  const resetBtn = document.getElementById("resetBtn");
 
   function showError(msg) {
     err.style.display = "block";
     err.textContent = msg;
   }
+  function hideError() {
+    err.style.display = "none";
+    err.textContent = "";
+  }
 
   function renderCards(items) {
-    if (!items.length) {
+    // IMPORTANT : on REMPLACE toujours tout
+    list.innerHTML = "";
+
+    if (!items || !items.length) {
       list.innerHTML = `<p style="opacity:.85;">Aucun hippodrome trouvé.</p>`;
       return;
     }
 
-    list.innerHTML = items.map(h => `
+    const html = items.map(h => `
       <div class="card">
         <div class="title">${escapeHtml(h.titre)}</div>
         <ul>
@@ -57,11 +75,14 @@
         </ul>
       </div>
     `).join("");
+
+    list.innerHTML = html;
   }
 
+  // fetch avec "cache bust" pour éviter l'ancien JS/JSON en cache
   let data;
   try {
-    const res = await fetch("./library.json", { cache: "no-store" });
+    const res = await fetch("./library.json?v=" + Date.now(), { cache: "no-store" });
     if (!res.ok) throw new Error("library.json introuvable");
     data = await res.json();
   } catch (e) {
@@ -69,19 +90,17 @@
     return;
   }
 
+  hideError();
+
   const hippodromes = Array.isArray(data.hippodromes) ? data.hippodromes : [];
 
-  // Remplit le menu déroulant
+  // Remplit le menu
   hippodromes.forEach((h) => {
     const opt = document.createElement("option");
     opt.value = h.id;
     opt.textContent = h.titre;
     select.appendChild(opt);
   });
-
-  // Si on a un paramètre d'URL ?h=...
-  const initial = getQuery("h") || "all";
-  if ([...select.options].some(o => o.value === initial)) select.value = initial;
 
   function applyFilter() {
     const value = select.value;
@@ -95,8 +114,21 @@
     renderCards(found ? [found] : []);
   }
 
+  // Init depuis URL
+  const initial = getQuery("h") || "all";
+  if ([...select.options].some(o => o.value === initial)) {
+    select.value = initial;
+  } else {
+    select.value = "all";
+  }
+
   select.addEventListener("change", applyFilter);
 
-  // Premier affichage
+  resetBtn.addEventListener("click", () => {
+    select.value = "all";
+    applyFilter();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
   applyFilter();
 })();
