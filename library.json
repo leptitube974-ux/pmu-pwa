@@ -1,0 +1,44 @@
+{
+  "hippodromes": [
+    {
+      "id": "vincennes_2100_autostart",
+      "titre": "Vincennes — 2100 m Autostart",
+      "details": [
+        "Départ autostart : gros impact des numéros",
+        "Vitesse primordiale",
+        "Chaos élevé si rythme haché",
+        "Attention aux chevaux bloqués à la corde"
+      ]
+    },
+    {
+      "id": "vincennes_2700_gp",
+      "titre": "Vincennes — 2700 m Grande Piste",
+      "details": [
+        "Tenue indispensable",
+        "Course souvent sélective",
+        "Moins de chaos que 2100",
+        "Les chevaux durs sont favorisés"
+      ]
+    },
+    {
+      "id": "vincennes_2850_gp",
+      "titre": "Vincennes — 2850 m Grande Piste",
+      "details": [
+        "Parcours de tenue",
+        "Scénario très important",
+        "Les attentistes peuvent revenir",
+        "Sélection par l’effort"
+      ]
+    },
+    {
+      "id": "cagnes_2925",
+      "titre": "Cagnes-sur-Mer — 2925 m",
+      "details": [
+        "Tenue primordiale",
+        "Dernier effort long décisif",
+        "Beaucoup d’aléas",
+        "Profils combatifs favorisés"
+      ]
+    }
+  ]
+}
