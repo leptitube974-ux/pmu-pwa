@@ -1,82 +1,16 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PMU – Bibliothèque Hippodromes</title>
   <style>
-    body {
-      background:#0b1220;
-      color:#fff;
-      font-family:Arial, sans-serif;
-      padding:16px;
-    }
-    .card {
-      background:#111827;
-      border-radius:12px;
-      padding:16px;
-      margin-bottom:12px;
-      cursor:pointer;
-    }
-    .details {
-      display:none;
-      margin-top:10px;
-      font-size:14px;
-      color:#d1d5db;
-    }
+    body{background:#0b1220;color:#fff;font-family:Arial,sans-serif;padding:16px;}
+    .card{background:#111827;border-radius:12px;padding:16px;margin-bottom:12px;}
   </style>
 </head>
-
 <body>
-
-<h1>PMU – Bibliothèque Hippodromes</h1>
-
-<div class="card" onclick="toggle('v2100')">
-  <strong>Vincennes – 2100 m Autostart</strong>
-  <div id="v2100" class="details">
-    • Gros impact des numéros<br>
-    • Vitesse primordiale<br>
-    • Chaos élevé si rythme haché<br>
-    • Attention aux chevaux bloqués à la corde
-  </div>
-</div>
-
-<div class="card" onclick="toggle('v2700')">
-  <strong>Vincennes – 2700 m Grande Piste</strong>
-  <div id="v2700" class="details">
-    • Tenue indispensable<br>
-    • Course souvent sélective<br>
-    • Moins de chaos que 2100<br>
-    • Chevaux durs favorisés
-  </div>
-</div>
-
-<div class="card" onclick="toggle('v2850')">
-  <strong>Vincennes – 2850 m Grande Piste</strong>
-  <div id="v2850" class="details">
-    • Parcours de tenue<br>
-    • Scénario capital<br>
-    • Attentistes dangereux<br>
-    • Sélection à l’effort
-  </div>
-</div>
-
-<div class="card" onclick="toggle('c2925')">
-  <strong>Cagnes-sur-Mer – 2925 m</strong>
-  <div id="c2925" class="details">
-    • Tenue primordiale<br>
-    • Dernier effort long décisif<br>
-    • Beaucoup d’aléas<br>
-    • Profils combatifs favorisés
-  </div>
-</div>
-
-<script>
-function toggle(id) {
-  const el = document.getElementById(id);
-  el.style.display = el.style.display === "block" ? "none" : "block";
-}
-</script>
-
+  <div id="app">Chargement…</div>
+  <script src="app.js"></script>
 </body>
 </html>
