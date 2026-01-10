@@ -1,76 +1,108 @@
 {
   "courses": [
+    /* =========================
+       COURSE ATTELÉ (TROT)
+       ========================= */
+
     {
       "id": "attel_vincennes_2100_autostart",
       "type": "Course Attelé",
       "hippodrome": "Vincennes",
       "title": "Vincennes — 2100 m Autostart",
-      "details": [
-        "Départ autostart : gros impact des numéros",
-        "Vitesse primordiale",
-        "Chaos élevé si rythme haché",
-        "Attention aux chevaux bloqués à la corde"
-      ],
-      "profils": ["Vitesse / tranchant", "Bon numéro", "Sprinteur"]
+      "details": ["Départ autostart : gros impact des numéros", "Vitesse primordiale", "Chaos élevé si rythme haché"],
+      "profils": ["Vitesse", "Bon numéro", "Sprinteur"]
     },
     {
       "id": "attel_vincennes_2700_gp",
       "type": "Course Attelé",
       "hippodrome": "Vincennes",
       "title": "Vincennes — 2700 m Grande Piste",
-      "details": [
-        "Tenue indispensable",
-        "Course souvent sélective",
-        "Moins de chaos que 2100",
-        "Chevaux durs favorisés"
-      ]
+      "details": ["Tenue indispensable", "Course souvent sélective", "Chevaux durs favorisés"],
+      "profils": ["Tenue", "Cheval dur", "Effort long"]
+    },
+    {
+      "id": "attel_vincennes_2850_gp",
+      "type": "Course Attelé",
+      "hippodrome": "Vincennes",
+      "title": "Vincennes — 2850 m Grande Piste",
+      "details": ["Parcours de tenue", "Scénario très important", "Sélection par l’effort"],
+      "profils": ["Tenue", "Moteur", "Long dernier effort"]
     },
     {
       "id": "attel_cagnes_2925",
       "type": "Course Attelé",
       "hippodrome": "Cagnes-sur-Mer",
       "title": "Cagnes-sur-Mer — 2925 m",
-      "details": [
-        "Tenue primordiale",
-        "Dernier effort long décisif",
-        "Beaucoup d’aléas",
-        "Profils combatifs favorisés"
-      ]
+      "details": ["Tenue primordiale", "Dernier effort long décisif", "Beaucoup d’aléas"],
+      "profils": ["Cheval dur", "Tenue", "Tolère aléas"]
     },
 
-    {
-      "id": "plat_deauville_1600",
-      "type": "Course Plat",
-      "hippodrome": "Deauville",
-      "title": "Deauville — 1600 m",
-      "details": [
-        "Parcours souvent tactique",
-        "Corde et numéro importants selon le terrain",
-        "Attention aux leaders cachés"
-      ]
-    },
+    { "id": "attel_enghien_base", "type": "Course Attelé", "hippodrome": "Enghien", "title": "Enghien — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_cabourg_base", "type": "Course Attelé", "hippodrome": "Cabourg", "title": "Cabourg — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_caen_base", "type": "Course Attelé", "hippodrome": "Caen", "title": "Caen — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_laval_base", "type": "Course Attelé", "hippodrome": "Laval", "title": "Laval — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_nantes_base", "type": "Course Attelé", "hippodrome": "Nantes", "title": "Nantes — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_angers_base", "type": "Course Attelé", "hippodrome": "Angers", "title": "Angers — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_le_mans_base", "type": "Course Attelé", "hippodrome": "Le Mans", "title": "Le Mans — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_argentan_base", "type": "Course Attelé", "hippodrome": "Argentan", "title": "Argentan — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_rouen_mauquenchy_base", "type": "Course Attelé", "hippodrome": "Rouen-Mauquenchy", "title": "Rouen-Mauquenchy — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_graignes_base", "type": "Course Attelé", "hippodrome": "Graignes", "title": "Graignes — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_vire_base", "type": "Course Attelé", "hippodrome": "Vire", "title": "Vire — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_lisieux_base", "type": "Course Attelé", "hippodrome": "Lisieux", "title": "Lisieux — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_bernay_base", "type": "Course Attelé", "hippodrome": "Bernay", "title": "Bernay — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_cherbourg_base", "type": "Course Attelé", "hippodrome": "Cherbourg", "title": "Cherbourg — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_le_mont_saint_michel_base", "type": "Course Attelé", "hippodrome": "Le Mont-Saint-Michel", "title": "Le Mont-Saint-Michel — (parcours à compléter)", "details": [], "profils": [] },
 
-    {
-      "id": "obs_auteuil_3600_haies",
-      "type": "Course Haies & Steeple",
-      "hippodrome": "Auteuil",
-      "title": "Auteuil — 3600 m Haies",
-      "details": [
-        "Terrain/pénétromètre décisif",
-        "Rythme + sauts propres",
-        "Les chevaux durs montent en puissance"
-      ]
-    },
-    {
-      "id": "obs_auteuil_4400_steeple",
-      "type": "Course Haies & Steeple",
-      "hippodrome": "Auteuil",
-      "title": "Auteuil — 4400 m Steeple",
-      "details": [
-        "Sélectif",
-        "Profil de combat",
-        "Sauts + tenue"
-      ]
-    }
+    { "id": "attel_la_capelle_base", "type": "Course Attelé", "hippodrome": "La Capelle", "title": "La Capelle — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_le_croise_laroche_base", "type": "Course Attelé", "hippodrome": "Le Croisé-Laroche", "title": "Le Croisé-Laroche — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_reims_base", "type": "Course Attelé", "hippodrome": "Reims", "title": "Reims — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_strasbourg_base", "type": "Course Attelé", "hippodrome": "Strasbourg", "title": "Strasbourg — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_nancy_base", "type": "Course Attelé", "hippodrome": "Nancy", "title": "Nancy — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_amiens_base", "type": "Course Attelé", "hippodrome": "Amiens", "title": "Amiens — (parcours à compléter)", "details": [], "profils": [] },
+
+    { "id": "attel_bordeaux_base", "type": "Course Attelé", "hippodrome": "Bordeaux-Le Bouscat", "title": "Bordeaux-Le Bouscat — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_toulouse_base", "type": "Course Attelé", "hippodrome": "Toulouse", "title": "Toulouse — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_agen_base", "type": "Course Attelé", "hippodrome": "Agen", "title": "Agen — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_vincennes_qualifs_grosbois", "type": "Course Attelé", "hippodrome": "Grosbois (qualifs)", "title": "Grosbois — Qualifications (repère)", "details": ["Centre d'entraînement / qualifications (pas PMU classique)"], "profils": [] },
+
+    { "id": "attel_lyon_parilly_base", "type": "Course Attelé", "hippodrome": "Lyon-Parilly", "title": "Lyon-Parilly — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_lyon_la_soie_base", "type": "Course Attelé", "hippodrome": "Lyon-La Soie", "title": "Lyon-La Soie — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_saint_galmier_base", "type": "Course Attelé", "hippodrome": "Saint-Galmier", "title": "Saint-Galmier — (parcours à compléter)", "details": [], "profils": [] },
+
+    { "id": "attel_marseille_borely_base", "type": "Course Attelé", "hippodrome": "Marseille-Borély", "title": "Marseille-Borély — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_marseille_vivaux_base", "type": "Course Attelé", "hippodrome": "Marseille-Vivaux", "title": "Marseille-Vivaux — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "attel_hyeres_base", "type": "Course Attelé", "hippodrome": "Hyères", "title": "Hyères — (parcours à compléter)", "details": [], "profils": [] },
+
+    /* =========================
+       COURSE PLAT (GALOP)
+       ========================= */
+
+    { "id": "plat_parislongchamp_base", "type": "Course Plat", "hippodrome": "ParisLongchamp", "title": "ParisLongchamp — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_chantilly_base", "type": "Course Plat", "hippodrome": "Chantilly", "title": "Chantilly — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_deauville_latouques_base", "type": "Course Plat", "hippodrome": "Deauville-La Touques", "title": "Deauville-La Touques — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_saint_cloud_base", "type": "Course Plat", "hippodrome": "Saint-Cloud", "title": "Saint-Cloud — (parcours à compléter)", "details": [], "profils": [] },
+
+    { "id": "plat_cagnes_galop_base", "type": "Course Plat", "hippodrome": "Cagnes-sur-Mer", "title": "Cagnes-sur-Mer (galop) — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_pau_base", "type": "Course Plat", "hippodrome": "Pau", "title": "Pau — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_bordeaux_base", "type": "Course Plat", "hippodrome": "Bordeaux-Le Bouscat", "title": "Bordeaux-Le Bouscat — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_toulouse_base", "type": "Course Plat", "hippodrome": "Toulouse", "title": "Toulouse — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_lyon_parilly_base", "type": "Course Plat", "hippodrome": "Lyon-Parilly", "title": "Lyon-Parilly — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_marseille_borely_base", "type": "Course Plat", "hippodrome": "Marseille-Borély", "title": "Marseille-Borély — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_marseille_vivaux_base", "type": "Course Plat", "hippodrome": "Marseille-Vivaux", "title": "Marseille-Vivaux — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_nantes_base", "type": "Course Plat", "hippodrome": "Nantes", "title": "Nantes — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_angers_base", "type": "Course Plat", "hippodrome": "Angers", "title": "Angers — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_le_mans_base", "type": "Course Plat", "hippodrome": "Le Mans", "title": "Le Mans — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "plat_la_teste_base", "type": "Course Plat", "hippodrome": "La Teste-de-Buch", "title": "La Teste-de-Buch — (parcours à compléter)", "details": [], "profils": [] },
+
+    /* =========================
+       COURSE OBSTACLES (HAIES & STEEPLE)
+       ========================= */
+
+    { "id": "obs_auteuil_base", "type": "Course Haies & Steeple", "hippodrome": "Auteuil", "title": "Auteuil — (parcours à compléter)", "details": ["Obstacles : haies + steeple", "Le terrain/pénétromètre change tout"], "profils": [] },
+    { "id": "obs_compiegne_base", "type": "Course Haies & Steeple", "hippodrome": "Compiègne", "title": "Compiègne — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "obs_pau_base", "type": "Course Haies & Steeple", "hippodrome": "Pau", "title": "Pau — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "obs_cagnes_base", "type": "Course Haies & Steeple", "hippodrome": "Cagnes-sur-Mer", "title": "Cagnes-sur-Mer — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "obs_clairefontaine_base", "type": "Course Haies & Steeple", "hippodrome": "Clairefontaine", "title": "Clairefontaine — (parcours à compléter)", "details": [], "profils": [] },
+    { "id": "obs_auteuil_steeple_ref", "type": "Course Haies & Steeple", "hippodrome": "Auteuil", "title": "Auteuil — Steeple (référence)", "details": ["Course sélective", "Sauts + tenue", "Profils de combat"], "profils": ["Cheval dur", "Sûr dans les sauts"] }
   ]
 }
