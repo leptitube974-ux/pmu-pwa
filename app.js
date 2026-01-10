@@ -1,178 +1,212 @@
-const $ = (id) => document.getElementById(id);
+const DATA_URL = "./library.json";
 
-const viewList = $("viewList");
-const viewDetail = $("viewDetail");
+const typeSelect = document.getElementById("typeSelect");
+const hippoSelect = document.getElementById("hippoSelect");
+const courseSelect = document.getElementById("courseSelect");
+const detail = document.getElementById("detail");
+const statusEl = document.getElementById("status");
 
-const filterSelect = $("filterSelect");
-const listContainer = $("listContainer");
-const listError = $("listError");
+let db = null;
 
-const backBtn = $("backBtn");
-const detailTitle = $("detailTitle");
-const detailBullets = $("detailBullets");
-const detailProfils = $("detailProfils");
-const detailNote = $("detailNote");
-
-let DATA = { hippodromes: [] };
-let CURRENT_FILTER = "__all__";
-
-function showView(which) {
-  if (which === "list") {
-    viewList.classList.add("active");
-    viewDetail.classList.remove("active");
-  } else {
-    viewDetail.classList.add("active");
-    viewList.classList.remove("active");
+function setStatus(msg){
+  if(!msg){
+    statusEl.style.display = "none";
+    statusEl.textContent = "";
+    return;
   }
-  window.scrollTo({ top: 0, behavior: "instant" });
+  statusEl.style.display = "block";
+  statusEl.textContent = msg;
 }
 
-function setError(msg) {
-  listError.textContent = msg;
-  listError.style.display = msg ? "block" : "none";
+function escapeHtml(s){
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
-function renderSelectOptions(items) {
-  filterSelect.innerHTML = `<option value="__all__">Tous les hippodromes</option>`;
-  for (const it of items) {
+function resetSelect(sel, placeholder){
+  sel.innerHTML = `<option value="" selected disabled>${placeholder}</option>`;
+  sel.value = "";
+}
+
+function setEnabled(sel, enabled){
+  sel.disabled = !enabled;
+}
+
+function getUniqueSorted(arr){
+  return Array.from(new Set(arr)).sort((a,b)=> a.localeCompare(b, "fr"));
+}
+
+function renderDetail(item){
+  if(!item){
+    detail.style.display = "none";
+    detail.innerHTML = "";
+    return;
+  }
+
+  const details = Array.isArray(item.details) ? item.details : [];
+  const profils = Array.isArray(item.profils) ? item.profils : [];
+  const notes = item.notes ? String(item.notes) : "";
+
+  detail.innerHTML = `
+    <div class="detailHeader">
+      <div class="badge">Fiche détaillée</div>
+      <div class="badge">${escapeHtml(item.type)} • ${escapeHtml(item.hippodrome)}</div>
+    </div>
+
+    <h2>${escapeHtml(item.title)}</h2>
+
+    ${details.length ? `
+      <h3>Points clés</h3>
+      <ul>${details.map(d=>`<li>${escapeHtml(d)}</li>`).join("")}</ul>
+    ` : ""}
+
+    ${profils.length ? `
+      <h3>Profils / repères</h3>
+      <ul>${profils.map(p=>`<li>${escapeHtml(p)}</li>`).join("")}</ul>
+    ` : ""}
+
+    ${notes ? `
+      <h3>Notes</h3>
+      <div style="color:#b8c4d6; font-size:16px; line-height:1.4;">
+        ${escapeHtml(notes)}
+      </div>
+    ` : ""}
+  `;
+
+  detail.style.display = "block";
+}
+
+function populateTypes(){
+  const types = getUniqueSorted(db.courses.map(c => c.type));
+  resetSelect(typeSelect, "Choisir : Attelé / Plat / Obstacles…");
+  for(const t of types){
     const opt = document.createElement("option");
-    opt.value = it.id;
-    opt.textContent = it.title;
-    filterSelect.appendChild(opt);
+    opt.value = t;
+    opt.textContent = t;
+    typeSelect.appendChild(opt);
   }
-  filterSelect.value = CURRENT_FILTER;
 }
 
-function makeCard(item) {
-  const card = document.createElement("div");
-  card.className = "card";
+function populateHipposForType(type){
+  const hippos = getUniqueSorted(
+    db.courses.filter(c => c.type === type).map(c => c.hippodrome)
+  );
 
-  const title = document.createElement("div");
-  title.className = "title";
-  title.textContent = item.title;
-
-  const ul = document.createElement("ul");
-  ul.className = "bullets";
-
-  (item.details || []).slice(0, 4).forEach((d) => {
-    const li = document.createElement("li");
-    li.textContent = d;
-    ul.appendChild(li);
-  });
-
-  card.appendChild(title);
-  card.appendChild(ul);
-
-  card.addEventListener("click", () => openDetail(item.id));
-  return card;
+  resetSelect(hippoSelect, "Choisir un hippodrome…");
+  for(const h of hippos){
+    const opt = document.createElement("option");
+    opt.value = h;
+    opt.textContent = h;
+    hippoSelect.appendChild(opt);
+  }
 }
 
-function renderList() {
-  setError("");
+function populateCoursesForHippo(type, hippo){
+  const list = db.courses
+    .filter(c => c.type === type && c.hippodrome === hippo)
+    .sort((a,b)=> a.title.localeCompare(b.title, "fr"));
 
-  listContainer.innerHTML = "";
-
-  const items = DATA.hippodromes || [];
-  if (items.length === 0) {
-    setError("Aucun contenu dans library.json (hippodromes vide).");
-    return;
+  resetSelect(courseSelect, "Choisir un parcours…");
+  for(const c of list){
+    const opt = document.createElement("option");
+    opt.value = c.id;
+    opt.textContent = c.title;
+    courseSelect.appendChild(opt);
   }
-
-  const filtered = (CURRENT_FILTER === "__all__")
-    ? items
-    : items.filter(x => x.id === CURRENT_FILTER);
-
-  if (filtered.length === 0) {
-    setError("Aucun hippodrome trouvé pour ce filtre.");
-    return;
-  }
-
-  filtered.forEach((it) => listContainer.appendChild(makeCard(it)));
 }
 
-function openDetail(id) {
-  const item = (DATA.hippodromes || []).find(x => x.id === id);
-  if (!item) return;
-
-  detailTitle.textContent = item.title;
-
-  // Points clés
-  detailBullets.innerHTML = "";
-  (item.details || []).forEach((d) => {
-    const li = document.createElement("li");
-    li.textContent = d;
-    detailBullets.appendChild(li);
-  });
-
-  // Profils
-  detailProfils.innerHTML = "";
-  const profils = item.profils || [];
-  if (profils.length === 0) {
-    const p = document.createElement("div");
-    p.className = "muted";
-    p.textContent = "Pas encore de profils renseignés.";
-    detailProfils.appendChild(p);
-  } else {
-    profils.forEach((pr) => {
-      const pill = document.createElement("span");
-      pill.className = "pill";
-      pill.textContent = pr;
-      detailProfils.appendChild(pill);
-    });
-  }
-
-  detailNote.textContent = item.note || "";
-
-  showView("detail");
+function findCourseById(id){
+  return db.courses.find(c => c.id === id) || null;
 }
 
-async function loadLibrary() {
-  try {
-    const res = await fetch("./library.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("HTTP " + res.status);
-
+async function init(){
+  try{
+    setStatus("");
+    const res = await fetch(DATA_URL, { cache: "no-store" });
+    if(!res.ok) throw new Error("library.json introuvable");
     const json = await res.json();
 
-    if (!json || !Array.isArray(json.hippodromes)) {
-      throw new Error("Structure attendue: { hippodromes: [] }");
+    if(!json || !Array.isArray(json.courses)){
+      throw new Error("Format invalide: attendu { courses: [...] }");
     }
 
-    DATA = json;
+    db = json;
 
-    // Remplit le menu
-    renderSelectOptions(DATA.hippodromes);
+    // 1) Types
+    populateTypes();
 
-    // Affiche la liste par défaut
-    CURRENT_FILTER = "__all__";
-    filterSelect.value = "__all__";
-    showView("list");
-    renderList();
+    // reset des autres
+    resetSelect(hippoSelect, "Choisir un hippodrome…");
+    resetSelect(courseSelect, "Choisir un parcours…");
+    setEnabled(hippoSelect, false);
+    setEnabled(courseSelect, false);
+    renderDetail(null);
 
-  } catch (e) {
-    console.error(e);
-    setError("Erreur : library.json invalide ou introuvable.");
+    // events cascade
+    typeSelect.addEventListener("change", () => {
+      const type = typeSelect.value;
+
+      // Reset bas
+      renderDetail(null);
+      resetSelect(hippoSelect, "Choisir un hippodrome…");
+      resetSelect(courseSelect, "Choisir un parcours…");
+      setEnabled(hippoSelect, true);
+      setEnabled(courseSelect, false);
+
+      populateHipposForType(type);
+
+      // Nettoie hash
+      history.replaceState(null, "", location.pathname + location.search);
+    });
+
+    hippoSelect.addEventListener("change", () => {
+      const type = typeSelect.value;
+      const hippo = hippoSelect.value;
+
+      renderDetail(null);
+      resetSelect(courseSelect, "Choisir un parcours…");
+      setEnabled(courseSelect, true);
+
+      populateCoursesForHippo(type, hippo);
+
+      history.replaceState(null, "", location.pathname + location.search);
+    });
+
+    courseSelect.addEventListener("change", () => {
+      const id = courseSelect.value;
+      const item = findCourseById(id);
+      renderDetail(item);
+      location.hash = id; // optionnel: mémoriser la fiche
+    });
+
+    // Si URL contient déjà #id
+    if(location.hash && location.hash.length > 1){
+      const id = location.hash.slice(1);
+      const item = findCourseById(id);
+      if(item){
+        // pré-sélection cascade
+        typeSelect.value = item.type;
+
+        setEnabled(hippoSelect, true);
+        populateHipposForType(item.type);
+        hippoSelect.value = item.hippodrome;
+
+        setEnabled(courseSelect, true);
+        populateCoursesForHippo(item.type, item.hippodrome);
+        courseSelect.value = item.id;
+
+        renderDetail(item);
+      }
+    }
+
+  }catch(err){
+    console.error(err);
+    setStatus("Erreur : library.json invalide ou introuvable.");
   }
 }
 
-// EVENTS
-filterSelect.addEventListener("change", (e) => {
-  CURRENT_FILTER = e.target.value;
-
-  if (CURRENT_FILTER === "__all__") {
-    showView("list");
-    renderList();
-  } else {
-    openDetail(CURRENT_FILTER);
-  }
-});
-
-backBtn.addEventListener("click", () => {
-  // Revenir à la liste "Tous"
-  CURRENT_FILTER = "__all__";
-  filterSelect.value = "__all__";
-  showView("list");
-  renderList();
-});
-
-// INIT
-loadLibrary();
+init();
