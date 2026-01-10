@@ -1,181 +1,119 @@
 <!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0b1220" />
-  <title>PMU — Bibliothèque Hippodromes</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PMU — Bibliothèque Hippodromes</title>
+    <style>
+      :root{
+        --bg1:#071628;
+        --bg2:#0b1f36;
+        --text:#e9eef7;
+        --muted:#b8c4d6;
+        --border: rgba(255,255,255,.10);
+        --shadow: 0 18px 60px rgba(0,0,0,.35);
+      }
+      *{box-sizing:border-box}
+      body{
+        margin:0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color:var(--text);
+        background: radial-gradient(1200px 900px at 25% -10%, #224e8f 0%, rgba(34,78,143,0) 55%),
+                    radial-gradient(1200px 900px at 80% 30%, rgba(68, 130, 255,.25) 0%, rgba(0,0,0,0) 60%),
+                    linear-gradient(180deg, var(--bg2), var(--bg1) 55%, #06101c);
+        min-height:100vh;
+      }
+      .wrap{max-width:920px;margin:0 auto;padding:28px 18px 60px}
+      h1{font-size:clamp(34px,6vw,62px);line-height:1.05;margin:8px 0 18px}
+      .bar{
+        background: rgba(255,255,255,.04);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 14px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+      .row{display:grid;grid-template-columns:1fr;gap:12px}
+      .selectWrap{position:relative;width:100%}
+      label{display:block;color:var(--muted);font-size:13px;margin:6px 2px 6px}
+      select{
+        width:100%;
+        appearance:none;
+        background: rgba(10,25,44,.65);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px 44px 16px 16px;
+        font-size: 18px;
+        outline: none;
+      }
+      select:disabled{opacity:.5}
+      .chev{position:absolute;right:14px;top: 54px;pointer-events:none;color:var(--muted)}
+      .hint{margin-top:10px;color:var(--muted);font-size:14px}
+      .detail{
+        margin-top:18px;
+        padding:18px 18px 20px;
+        background: rgba(255,255,255,.04);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+      }
+      .detailHeader{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+      .badge{
+        font-size:12px;color:var(--muted);
+        border:1px solid var(--border);
+        padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.15)
+      }
+      h2{margin:10px 0 10px;font-size:clamp(28px,5vw,44px);line-height:1.1}
+      h3{margin:14px 0 8px;font-size:18px;color:var(--muted);font-weight:650}
+      ul{margin:8px 0 0 18px;padding:0}
+      li{margin:6px 0;font-size:18px}
+      .error{margin-top:12px;color:#ffb4b4}
+    </style>
+  </head>
 
-  <style>
-    :root{
-      --bg:#0b1220;
-      --txt:#e7edf6;
-      --muted:#b8c4d6;
-      --border:rgba(255,255,255,.10);
-      --shadow: 0 20px 60px rgba(0,0,0,.35);
-      --radius:22px;
-      --glass: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1100px 600px at 20% -10%, #172a52 0%, rgba(23,42,82,0) 55%),
-                  radial-gradient(900px 500px at 95% 10%, #1a3b7a 0%, rgba(26,59,122,0) 55%),
-                  var(--bg);
-      color:var(--txt);
-    }
-    .wrap{
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 26px 18px 48px;
-    }
-    h1{
-      font-size: clamp(38px, 6vw, 64px);
-      line-height: 1.0;
-      margin: 8px 0 18px;
-      font-weight: 950;
-      letter-spacing: .2px;
-    }
-    .topbar{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin: 12px 0 18px;
-    }
-    .select{ width:100%; position:relative; }
-    select{
-      width:100%;
-      appearance:none;
-      border:1px solid var(--border);
-      background: var(--glass);
-      color: var(--txt);
-      padding: 16px 46px 16px 16px;
-      border-radius: 16px;
-      font-size: 18px;
-      outline: none;
-      box-shadow: var(--shadow);
-    }
-    .select:after{
-      content:"▾";
-      position:absolute;
-      right:16px;
-      top:50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      pointer-events:none;
-      font-size: 18px;
-    }
+  <body>
+    <div class="wrap">
+      <h1>PMU — Bibliothèque Hippodromes</h1>
 
-    /* LIST */
-    .grid{ display:grid; gap:14px; margin-top: 14px; }
-    .card{
-      border:1px solid var(--border);
-      background: var(--glass);
-      border-radius: var(--radius);
-      padding: 18px 18px 16px;
-      box-shadow: var(--shadow);
-      cursor:pointer;
-      transition: transform .08s ease, border-color .08s ease;
-    }
-    .card:active{ transform: scale(.99); }
-    .card:hover{ border-color: rgba(255,255,255,.18); }
+      <div class="bar">
+        <div class="row">
 
-    .title{
-      font-weight: 950;
-      font-size: 24px;
-      margin: 0 0 10px;
-    }
-    .bullets{
-      margin:0;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.35;
-    }
+          <div class="selectWrap">
+            <label for="typeSelect">Type de course</label>
+            <select id="typeSelect">
+              <option value="" selected disabled>Choisir : Attelé / Plat / Obstacles…</option>
+            </select>
+            <div class="chev">▾</div>
+          </div>
 
-    /* DETAIL */
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color: var(--txt);
-      font-weight: 900;
-      font-size: 16px;
-      cursor:pointer;
-      box-shadow: var(--shadow);
-    }
-    .btn:active{ transform: scale(.99); }
-    .muted{ color: var(--muted); font-size: 18px; line-height: 1.4; }
+          <div class="selectWrap">
+            <label for="hippoSelect">Hippodrome</label>
+            <select id="hippoSelect" disabled>
+              <option value="" selected disabled>Choisir un hippodrome…</option>
+            </select>
+            <div class="chev">▾</div>
+          </div>
 
-    .sectionTitle{ margin: 18px 0 10px; font-weight: 950; font-size: 22px; }
+          <div class="selectWrap">
+            <label for="courseSelect">Course / Parcours</label>
+            <select id="courseSelect" disabled>
+              <option value="" selected disabled>Choisir un parcours…</option>
+            </select>
+            <div class="chev">▾</div>
+          </div>
 
-    .pillRow{ display:flex; gap:10px; flex-wrap:wrap; }
-    .pill{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      color: var(--txt);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 900;
-    }
-
-    .error{
-      color:#ffb4b4;
-      font-weight:900;
-      margin-top: 10px;
-    }
-
-    .view{ display:none; }
-    .view.active{ display:block; }
-  </style>
-</head>
-
-<body>
-  <div class="wrap">
-    <h1>PMU — Bibliothèque Hippodromes</h1>
-
-    <!-- LIST VIEW -->
-    <section id="viewList" class="view active">
-      <div class="topbar">
-        <div class="select">
-          <select id="filterSelect" aria-label="Choisir un hippodrome">
-            <option value="__all__">Tous les hippodromes</option>
-          </select>
         </div>
+
+        <div class="hint">
+          1) Tu choisis le <b>type</b> → 2) l’<b>hippodrome</b> → 3) le <b>parcours</b> → la fiche s’affiche.
+        </div>
+        <div id="status" class="error" style="display:none;"></div>
       </div>
 
-      <div id="listContainer" class="grid"></div>
-      <div id="listError" class="error" style="display:none"></div>
-    </section>
+      <div id="detail" class="detail" style="display:none;"></div>
+    </div>
 
-    <!-- DETAIL VIEW -->
-    <section id="viewDetail" class="view">
-      <div class="topbar">
-        <button class="btn" id="backBtn">← Retour</button>
-        <div class="muted" style="font-weight:950">Fiche détaillée</div>
-      </div>
-
-      <h2 id="detailTitle" style="font-size: clamp(34px, 5vw, 56px); margin: 14px 0 10px; font-weight: 950;"></h2>
-
-      <div class="card" style="cursor:default">
-        <div class="sectionTitle">Points clés</div>
-        <ul id="detailBullets" class="bullets"></ul>
-
-        <div class="sectionTitle">Profils favorisés</div>
-        <div id="detailProfils" class="pillRow"></div>
-
-        <div id="detailNote" class="muted" style="margin-top:14px"></div>
-      </div>
-    </section>
-  </div>
-
-  <script src="./app.js" defer></script>
-</body>
+    <script src="./app.js" defer></script>
+  </body>
 </html>
