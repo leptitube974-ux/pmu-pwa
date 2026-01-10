@@ -2,123 +2,222 @@
   "hippodromes": [
     {
       "id": "vincennes_2100_autostart",
-      "titre": "Vincennes — 2100 m Autostart",
+      "title": "Vincennes — 2100 m Autostart",
       "details": [
         "Départ autostart : gros impact des numéros",
         "Vitesse primordiale",
         "Chaos élevé si rythme haché",
         "Attention aux chevaux bloqués à la corde"
-      ]
+      ],
+      "profils": [
+        "vitesse / tranchant",
+        "départ rapide",
+        "sprinteur capable d'accélérer",
+        "bien placé derrière l’autostart (numéro)",
+        "maniabilité en peloton"
+      ],
+      "note": "Si gros train + relais : les finisseurs peuvent revenir. Si course hachée : chaos ↑."
     },
     {
       "id": "vincennes_2700_gp",
-      "titre": "Vincennes — 2700 m Grande Piste",
+      "title": "Vincennes — 2700 m Grande Piste",
       "details": [
         "Tenue indispensable",
         "Course souvent sélective",
         "Moins de chaos que 2100",
         "Les chevaux durs sont favorisés"
-      ]
+      ],
+      "profils": [
+        "cheval dur / combattif",
+        "tenue confirmée",
+        "capable d'un effort long",
+        "apte à progresser dans le dernier kilomètre",
+        "peut encaisser une course sélective"
+      ],
+      "note": "Bonne base pour profils de tenue. Les attentistes dépendent du rythme."
     },
     {
       "id": "vincennes_2850_gp",
-      "titre": "Vincennes — 2850 m Grande Piste",
+      "title": "Vincennes — 2850 m Grande Piste",
       "details": [
         "Parcours de tenue",
         "Scénario très important",
         "Les attentistes peuvent revenir",
         "Sélection par l’effort"
-      ]
+      ],
+      "profils": [
+        "tenue + dureté",
+        "capable de faire le tour (effort soutenu)",
+        "finisseur si train sélectif",
+        "supporte les relais / changements de rythme",
+        "moteur (gros fond)"
+      ],
+      "note": "Scénario capital : si ça roule, les finisseurs reviennent fort."
     },
     {
       "id": "vincennes_2100_volte",
-      "titre": "Vincennes — 2100 m Volte",
+      "title": "Vincennes — 2100 m Volte",
       "details": [
-        "Départ délicat : vigilance sur les allures",
+        "Départ au volte : départ délicat",
+        "Beaucoup d’incidents possibles",
         "Placement et maniabilité importants",
-        "Rythme peut être haché",
-        "Désavantage aux chevaux fautifs"
-      ]
+        "Rythme parfois irrégulier"
+      ],
+      "profils": [
+        "sûr dans ses allures",
+        "bon au départ volte",
+        "maniable (se place vite)",
+        "capable de repartir après un effort",
+        "ne panique pas dans le peloton"
+      ],
+      "note": "Profil “sécurisé” recherché : volte = risque de faute ↑."
     },
+
     {
       "id": "enghien_2150_autostart",
-      "titre": "Enghien — 2150 m Autostart",
+      "title": "Enghien — 2150 m Autostart",
       "details": [
-        "Départ très important",
-        "Parcours souvent rapide",
-        "Position/numéro derrière l’autostart déterminant",
-        "Attention aux chevaux de vitesse"
-      ]
+        "Parcours de vitesse",
+        "Placement derrière l’autostart important",
+        "Course souvent tactique",
+        "Derniers 500 m très décisifs"
+      ],
+      "profils": [
+        "vitesse + pointe finale",
+        "bon numéro autostart",
+        "capable de suivre un rythme élevé",
+        "sprinteur/finisseur",
+        "réactif dans les tournants"
+      ],
+      "note": "Souvent : ceux qui gardent du jus pour finir font la différence."
     },
     {
       "id": "enghien_2875",
-      "titre": "Enghien — 2875 m",
+      "title": "Enghien — 2875 m",
       "details": [
-        "Tenue + pointe finale",
-        "Course moins explosive que 2150",
-        "Bon dos important",
-        "Attentistes dangereux si train régulier"
-      ]
+        "Tenue nécessaire",
+        "Course souvent rythmée",
+        "Possibilité de retours des attentistes",
+        "Placement dans le parcours déterminant"
+      ],
+      "profils": [
+        "tenue + vitesse de base",
+        "capable d'avancer progressivement",
+        "finisseur si bon dos",
+        "supporte un effort long",
+        "régulier (peu de fautes)"
+      ],
+      "note": "Mix tenue/vitesse : pas des “lents”, mais pas que des sprinteurs."
     },
+
     {
       "id": "cagnes_2925",
-      "titre": "Cagnes-sur-Mer — 2925 m",
+      "title": "Cagnes-sur-Mer — 2925 m",
       "details": [
         "Tenue primordiale",
         "Dernier effort long décisif",
         "Beaucoup d’aléas",
         "Profils combatifs favorisés"
-      ]
+      ],
+      "profils": [
+        "cheval dur / combatif",
+        "tenue forte",
+        "capable d'un long dernier effort",
+        "tolère les aléas / parcours caché",
+        "ne lâche pas au combat"
+      ],
+      "note": "Méthode: scénario 2 par défaut (aléas). Favoriser les chevaux capables de durer."
     },
     {
       "id": "cagnes_2150_autostart",
-      "titre": "Cagnes-sur-Mer — 2150 m Autostart",
+      "title": "Cagnes-sur-Mer — 2150 m Autostart",
       "details": [
-        "Vitesse + départ déterminants",
-        "Risque d’aléas dans le premier tournant",
-        "Chevaux bien placés favorisés",
-        "Attention aux parcours piégés"
-      ]
+        "Vitesse + départ important",
+        "Parcours parfois piégeux",
+        "Placements/numéros comptent",
+        "Final très rapide"
+      ],
+      "profils": [
+        "départ rapide",
+        "vitesse et pointe",
+        "bon numéro autostart",
+        "maniabilité (corde à gauche)",
+        "capable de sprinter en fin de parcours"
+      ],
+      "note": "Si rythme haché : avantage aux chevaux très maniables et sûrs."
     },
+
     {
       "id": "caen_2450",
-      "titre": "Caen — 2450 m",
+      "title": "Caen — 2450 m",
       "details": [
-        "Parcours de tenue",
-        "Train régulier souvent favorable aux durs",
-        "Placement important dans les tournants",
-        "Attentistes possibles si rythme soutenu"
-      ]
+        "Parcours de tenue intermédiaire",
+        "Course souvent régulière",
+        "Se placer sans faire trop d’effort",
+        "Dernier effort important"
+      ],
+      "profils": [
+        "tenue + vitesse de base",
+        "régulier",
+        "capable d'accélérer sur la fin",
+        "bon comportement en peloton",
+        "dur sans être tracteur"
+      ],
+      "note": "Souvent un parcours “propre” : attention aux chevaux trop offensifs."
     },
     {
       "id": "angers_2350",
-      "titre": "Angers — 2350 m",
+      "title": "Angers — 2350 m",
       "details": [
-        "Tenue + maniabilité",
-        "Course souvent tactique",
-        "Important d’être bien placé à l’entrée de ligne droite",
-        "Outsiders possibles si rythme irrégulier"
-      ]
+        "Parcours intermédiaire",
+        "Se placer est important",
+        "Course parfois tactique",
+        "Dernier effort fait la différence"
+      ],
+      "profils": [
+        "polyvalent",
+        "capable de se placer",
+        "pointe finale",
+        "sûr dans ses allures",
+        "supporte un parcours nez au vent si besoin"
+      ],
+      "note": "Terrain/état de piste peut jouer : garde un œil sur l’aptitude."
     },
     {
       "id": "laval_2850",
-      "titre": "Laval — 2850 m",
+      "title": "Laval — 2850 m",
       "details": [
-        "Tenue indispensable",
-        "Course souvent sélective à partir du dernier km",
-        "Chevaux capables de maintenir un effort long",
-        "Vigilance sur le parcours caché"
-      ]
+        "Tenue importante",
+        "Course souvent sélective",
+        "Les chevaux durs peuvent aller au bout",
+        "Rythme peut monter de loin"
+      ],
+      "profils": [
+        "tenue + dureté",
+        "capable d'enrouler de loin",
+        "régulier",
+        "supporte une course sélective",
+        "bon dernier km"
+      ],
+      "note": "Bon terrain pour chevaux durs si le rythme augmente tôt."
     },
     {
       "id": "cherbourg_2625",
-      "titre": "Cherbourg — 2625 m",
+      "title": "Cherbourg — 2625 m",
       "details": [
         "Parcours de tenue",
-        "Scénario et placement importants",
-        "Chevaux endurants avantagés",
-        "Risque d’aléas si course mal rythmée"
-      ]
+        "Profil parfois piégeux selon rythme",
+        "Course d’attente possible",
+        "Finish décisif si train sélectif"
+      ],
+      "profils": [
+        "tenue solide",
+        "sûr et régulier",
+        "capable de faire un long dernier effort",
+        "tolère un parcours caché",
+        "dur au combat"
+      ],
+      "note": "Si faux train : attention, ça peut favoriser un cheval de vitesse qui sprint."
     }
   ]
 }
