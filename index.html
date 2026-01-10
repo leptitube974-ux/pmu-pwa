@@ -1,71 +1,201 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b1220" />
   <title>PMU — Bibliothèque Hippodromes</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0b1220;
-      color: #e5e7eb;
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a2e;
+      --card2:#0c1628;
+      --txt:#e7edf6;
+      --muted:#b8c4d6;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1100px 600px at 20% -10%, #172a52 0%, rgba(23,42,82,0) 55%),
+                  radial-gradient(900px 500px at 95% 10%, #1a3b7a 0%, rgba(26,59,122,0) 55%),
+                  var(--bg);
+      color:var(--txt);
+    }
+    .wrap{
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 26px 18px 48px;
+    }
+    h1{
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1.0;
+      margin: 8px 0 18px;
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+    .topbar{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin: 12px 0 18px;
     }
 
-    h1 {
-      padding: 20px;
-      font-size: 2rem;
+    .select{
+      width:100%;
+      position:relative;
     }
-
-    select {
-      width: calc(100% - 40px);
-      margin: 0 20px 20px;
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 10px;
-      border: none;
-      background: #111827;
-      color: #e5e7eb;
-    }
-
-    .card {
-      margin: 12px 20px;
-      padding: 16px;
-      background: #111827;
+    select{
+      width:100%;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      color: var(--txt);
+      padding: 16px 46px 16px 16px;
       border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,.3);
+      font-size: 18px;
+      outline: none;
+      box-shadow: var(--shadow);
+    }
+    .select:after{
+      content:"▾";
+      position:absolute;
+      right:16px;
+      top:50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events:none;
+      font-size: 18px;
     }
 
-    .card h2 {
+    .grid{
+      display:grid;
+      gap:14px;
+      margin-top: 14px;
+    }
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow);
+      cursor:pointer;
+      transition: transform .08s ease, border-color .08s ease;
+    }
+    .card:active{ transform: scale(.99); }
+    .card:hover{ border-color: rgba(255,255,255,.14); }
+
+    .title{
+      font-weight: 900;
+      font-size: 24px;
       margin: 0 0 10px;
-      font-size: 1.1rem;
     }
-
-    .card ul {
+    .bullets{
+      margin:0;
       padding-left: 18px;
-      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+    .sectionTitle{
+      margin: 18px 0 10px;
+      font-weight: 900;
+      font-size: 22px;
+    }
+    .pillRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: var(--txt);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .muted{
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      color: var(--txt);
+      font-weight: 800;
+      font-size: 16px;
+      cursor:pointer;
+      box-shadow: var(--shadow);
+    }
+    .btn:active{ transform: scale(.99); }
+
+    .error{
+      color:#ffb4b4;
+      font-weight:800;
+      margin-top: 10px;
     }
 
-    .card li {
-      margin-bottom: 6px;
-      color: #cbd5f5;
-    }
+    /* Views */
+    .view{ display:none; }
+    .view.active{ display:block; }
   </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <h1>PMU — Bibliothèque Hippodromes</h1>
 
-  <h1>PMU — Bibliothèque Hippodromes</h1>
+    <!-- LIST VIEW -->
+    <section id="viewList" class="view active">
+      <div class="topbar">
+        <div class="select">
+          <select id="filterSelect" aria-label="Choisir un hippodrome">
+            <option value="__all__">Tous les hippodromes</option>
+          </select>
+        </div>
+      </div>
 
-  <select id="filter">
-    <option value="all">Tous les hippodromes</option>
-  </select>
+      <div id="listContainer" class="grid"></div>
+      <div id="listError" class="error" style="display:none"></div>
+    </section>
 
-  <div id="app"></div>
+    <!-- DETAIL VIEW -->
+    <section id="viewDetail" class="view">
+      <div class="topbar">
+        <button class="btn" id="backBtn">← Retour</button>
+        <div class="muted" style="font-weight:900">Fiche détaillée</div>
+      </div>
 
-  <!-- 🔥 LE SCRIPT MANQUANT EST ICI 🔥 -->
+      <h2 id="detailTitle" style="font-size: clamp(34px, 5vw, 56px); margin: 14px 0 10px; font-weight: 950;"></h2>
+
+      <div class="card" style="cursor:default">
+        <div class="sectionTitle">Points clés</div>
+        <ul id="detailBullets" class="bullets"></ul>
+
+        <div class="sectionTitle">Profils favorisés</div>
+        <div id="detailProfils" class="pillRow"></div>
+
+        <div id="detailNote" class="muted" style="margin-top:14px"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- IMPORTANT : ton JS -->
   <script src="./app.js" defer></script>
-
 </body>
 </html>
