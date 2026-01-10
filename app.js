@@ -1,128 +1,199 @@
-// ==============================
-// CONFIG
-// ==============================
-const DATA_URL = "./library.json";
+// app.js — PMU Bibliothèque Hippodromes
+// Charge library.json (GitHub Pages compatible) + 3 dropdowns
 
-// ==============================
-// STATE
-// ==============================
-let DATA = [];
-let selectedType = null;
-let selectedHippodrome = null;
+(() => {
+  // ✅ URL RELATIVE ROBUSTE (marche même si ton site est /pmu-pwa/)
+  const DATA_URL = new URL("./library.json", window.location.href).toString();
 
-// ==============================
-// DOM
-// ==============================
-const typeSelect = document.getElementById("typeSelect");
-const hippodromeSelect = document.getElementById("hippodromeSelect");
-const parcoursSelect = document.getElementById("parcoursSelect");
-const fiche = document.getElementById("fiche");
+  const $ = (sel) => document.querySelector(sel);
 
-// ==============================
-// INIT
-// ==============================
-async function init() {
-  try {
-    const res = await fetch(DATA_URL, { cache: "no-store" });
-    if (!res.ok) throw new Error("library.json introuvable");
-    const json = await res.json();
+  const els = {
+    type: $("#selectType"),
+    hippo: $("#selectHippo"),
+    parcours: $("#selectParcours"),
+    result: $("#result"),
+    error: $("#errorBox"),
+  };
 
-    if (!Array.isArray(json.courses)) {
-      throw new Error("Format invalide : attendu { courses: [] }");
+  const state = {
+    courses: [],
+    selectedType: "",
+    selectedHippo: "",
+    selectedParcoursId: "",
+  };
+
+  function showError(msg) {
+    if (!els.error) return;
+    els.error.style.display = "block";
+    els.error.textContent = msg;
+  }
+
+  function clearError() {
+    if (!els.error) return;
+    els.error.style.display = "none";
+    els.error.textContent = "";
+  }
+
+  function setSelectOptions(selectEl, options, placeholder) {
+    selectEl.innerHTML = "";
+    const opt0 = document.createElement("option");
+    opt0.value = "";
+    opt0.textContent = placeholder;
+    opt0.disabled = true;
+    opt0.selected = true;
+    selectEl.appendChild(opt0);
+
+    for (const { value, label } of options) {
+      const opt = document.createElement("option");
+      opt.value = value;
+      opt.textContent = label;
+      selectEl.appendChild(opt);
     }
 
-    DATA = json.courses;
-    populateTypes();
-  } catch (err) {
-    console.error(err);
-    fiche.innerHTML = `<p style="color:red">Erreur : ${err.message}</p>`;
+    selectEl.disabled = options.length === 0;
   }
-}
 
-// ==============================
-// POPULATE TYPE
-// ==============================
-function populateTypes() {
-  typeSelect.innerHTML = `<option value="">Choisir : Attelé / Plat / Obstacles</option>`;
-  hippodromeSelect.innerHTML = `<option value="">Choisir un hippodrome...</option>`;
-  parcoursSelect.innerHTML = `<option value="">Choisir un parcours...</option>`;
+  function uniqSorted(arr) {
+    return [...new Set(arr)].sort((a, b) => a.localeCompare(b, "fr"));
+  }
 
-  const types = [...new Set(DATA.map(c => c.type))];
-  types.forEach(type => {
-    const opt = document.createElement("option");
-    opt.value = type;
-    opt.textContent = type;
-    typeSelect.appendChild(opt);
-  });
-}
+  function renderResult(course) {
+    if (!els.result) return;
+    if (!course) {
+      els.result.innerHTML = "";
+      return;
+    }
 
-// ==============================
-// TYPE CHANGE
-// ==============================
-typeSelect.addEventListener("change", () => {
-  selectedType = typeSelect.value;
-  hippodromeSelect.innerHTML = `<option value="">Choisir un hippodrome...</option>`;
-  parcoursSelect.innerHTML = `<option value="">Choisir un parcours...</option>`;
-  fiche.innerHTML = "";
+    const details = Array.isArray(course.details) ? course.details : [];
+    els.result.innerHTML = `
+      <div class="card">
+        <div class="cardTitle">${escapeHtml(course.titre || course.title || "")}</div>
+        <div class="muted">${escapeHtml(course.type)} • ${escapeHtml(course.hippodrome)} • ${escapeHtml(course.parcours)}</div>
 
-  if (!selectedType) return;
+        ${details.length ? `
+          <h3>Points clés</h3>
+          <ul>
+            ${details.map(d => `<li>${escapeHtml(d)}</li>`).join("")}
+          </ul>
+        ` : `<div class="muted">Aucun détail pour l’instant.</div>`}
+      </div>
+    `;
+  }
 
-  const hippodromes = [
-    ...new Set(
-      DATA.filter(c => c.type === selectedType).map(c => c.hippodrome)
-    )
-  ];
+  function escapeHtml(str) {
+    return String(str ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
 
-  hippodromes.forEach(h => {
-    const opt = document.createElement("option");
-    opt.value = h;
-    opt.textContent = h;
-    hippodromeSelect.appendChild(opt);
-  });
-});
+  function onTypeChange() {
+    state.selectedType = els.type.value;
+    state.selectedHippo = "";
+    state.selectedParcoursId = "";
 
-// ==============================
-// HIPPODROME CHANGE
-// ==============================
-hippodromeSelect.addEventListener("change", () => {
-  selectedHippodrome = hippodromeSelect.value;
-  parcoursSelect.innerHTML = `<option value="">Choisir un parcours...</option>`;
-  fiche.innerHTML = "";
+    // reset selects
+    setSelectOptions(els.hippo, [], "Choisir un hippodrome…");
+    setSelectOptions(els.parcours, [], "Choisir un parcours…");
+    renderResult(null);
 
-  if (!selectedHippodrome) return;
+    const list = state.courses.filter(c => (c.type || "").toLowerCase() === state.selectedType.toLowerCase());
+    const hippos = uniqSorted(list.map(c => c.hippodrome).filter(Boolean));
 
-  const parcours = DATA.filter(
-    c => c.type === selectedType && c.hippodrome === selectedHippodrome
-  );
+    setSelectOptions(
+      els.hippo,
+      hippos.map(h => ({ value: h, label: h })),
+      "Choisir un hippodrome…"
+    );
+  }
 
-  parcours.forEach(p => {
-    const opt = document.createElement("option");
-    opt.value = p.id;
-    opt.textContent = p.titre;
-    parcoursSelect.appendChild(opt);
-  });
-});
+  function onHippoChange() {
+    state.selectedHippo = els.hippo.value;
+    state.selectedParcoursId = "";
 
-// ==============================
-// PARCOURS CHANGE
-// ==============================
-parcoursSelect.addEventListener("change", () => {
-  const id = parcoursSelect.value;
-  fiche.innerHTML = "";
-  if (!id) return;
+    setSelectOptions(els.parcours, [], "Choisir un parcours…");
+    renderResult(null);
 
-  const course = DATA.find(c => c.id === id);
-  if (!course) return;
+    const list = state.courses.filter(c =>
+      (c.type || "").toLowerCase() === state.selectedType.toLowerCase() &&
+      (c.hippodrome || "") === state.selectedHippo
+    );
 
-  fiche.innerHTML = `
-    <h2>${course.titre}</h2>
-    <ul>
-      ${course.details.map(d => `<li>${d}</li>`).join("")}
-    </ul>
-  `;
-});
+    // parcours dropdown = id unique (mais label = parcours)
+    const options = list
+      .filter(c => c.id && c.parcours)
+      .map(c => ({ value: c.id, label: c.parcours }));
 
-// ==============================
-// START
-// ==============================
-init();
+    // tri alphabétique sur label
+    options.sort((a, b) => a.label.localeCompare(b.label, "fr"));
+
+    setSelectOptions(els.parcours, options, "Choisir un parcours…");
+  }
+
+  function onParcoursChange() {
+    state.selectedParcoursId = els.parcours.value;
+    const course = state.courses.find(c => c.id === state.selectedParcoursId) || null;
+    renderResult(course);
+  }
+
+  async function load() {
+    clearError();
+
+    // ✅ Anti-cache (utile sur GitHub Pages)
+    const urlNoCache = `${DATA_URL}?v=${Date.now()}`;
+
+    try {
+      const res = await fetch(urlNoCache, { cache: "no-store" });
+      if (!res.ok) {
+        throw new Error(`Fetch library.json échoué (${res.status}) : ${res.statusText}`);
+      }
+      const json = await res.json();
+
+      // ✅ format attendu
+      if (!json || !Array.isArray(json.courses)) {
+        throw new Error(`Format JSON invalide : attendu { "courses": [ ... ] }`);
+      }
+
+      state.courses = json.courses;
+
+      // Types
+      const types = uniqSorted(state.courses.map(c => c.type).filter(Boolean));
+
+      setSelectOptions(
+        els.type,
+        types.map(t => ({ value: t, label: t })),
+        "Choisir : Attelé / Plat / Obstacles…"
+      );
+
+      // désactiver hippo/parcours au départ
+      setSelectOptions(els.hippo, [], "Choisir un hippodrome…");
+      setSelectOptions(els.parcours, [], "Choisir un parcours…");
+      renderResult(null);
+
+    } catch (err) {
+      showError(
+        `Erreur : library.json invalide ou introuvable.\n` +
+        `Détail : ${err.message}\n` +
+        `URL testée : ${DATA_URL}`
+      );
+
+      // menus vides mais propres
+      setSelectOptions(els.type, [], "Choisir : Attelé / Plat / Obstacles…");
+      setSelectOptions(els.hippo, [], "Choisir un hippodrome…");
+      setSelectOptions(els.parcours, [], "Choisir un parcours…");
+      renderResult(null);
+    }
+  }
+
+  function wire() {
+    els.type?.addEventListener("change", onTypeChange);
+    els.hippo?.addEventListener("change", onHippoChange);
+    els.parcours?.addEventListener("change", onParcoursChange);
+  }
+
+  // init
+  wire();
+  load();
+})();
