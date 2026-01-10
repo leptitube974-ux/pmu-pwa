@@ -1,40 +1,204 @@
 {
   "courses": [
     {
-      "id": "vincennes_2100",
+      "id": "attele_vincennes_2100_autostart",
       "type": "Attelé",
       "hippodrome": "Vincennes",
-      "parcours": "2100 m Autostart",
-      "titre": "Vincennes – 2100 m Autostart",
+      "parcours": "2100 m Autostart (GP)",
+      "title": "Vincennes — 2100 m Autostart",
+      "tags": ["autostart", "vitesse", "corde-gauche"],
       "details": [
-        "Départ autostart",
+        "Départ autostart : gros impact des numéros",
         "Vitesse primordiale",
-        "Chaos élevé",
-        "Attention aux numéros extérieurs"
+        "Chaos élevé si rythme haché",
+        "Attention aux chevaux bloqués à la corde"
       ]
     },
     {
-      "id": "vincennes_2700",
+      "id": "attele_vincennes_2700_gp",
       "type": "Attelé",
       "hippodrome": "Vincennes",
       "parcours": "2700 m Grande Piste",
-      "titre": "Vincennes – 2700 m",
+      "title": "Vincennes — 2700 m Grande Piste",
+      "tags": ["tenue", "gp", "corde-gauche"],
       "details": [
         "Tenue indispensable",
-        "Course sélective",
-        "Moins de chaos"
+        "Course souvent sélective",
+        "Moins de chaos que 2100",
+        "Les chevaux durs sont favorisés"
       ]
     },
     {
-      "id": "cagnes_2925",
+      "id": "attele_vincennes_2850_gp",
+      "type": "Attelé",
+      "hippodrome": "Vincennes",
+      "parcours": "2850 m Grande Piste",
+      "title": "Vincennes — 2850 m Grande Piste",
+      "tags": ["tenue", "scenario", "attentiste"],
+      "details": [
+        "Parcours de tenue",
+        "Scénario très important",
+        "Les attentistes peuvent revenir",
+        "Sélection par l’effort"
+      ]
+    },
+    {
+      "id": "attele_enghien_2150_autostart",
+      "type": "Attelé",
+      "hippodrome": "Enghien",
+      "parcours": "2150 m Autostart",
+      "title": "Enghien — 2150 m Autostart",
+      "tags": ["autostart", "vitesse"],
+      "details": [
+        "Parcours rapide : profils vitesse",
+        "Placement au départ important",
+        "Risque de trafic si peloton compact"
+      ]
+    },
+    {
+      "id": "attele_enghien_2875",
+      "type": "Attelé",
+      "hippodrome": "Enghien",
+      "parcours": "2875 m",
+      "title": "Enghien — 2875 m",
+      "tags": ["tenue", "rythme"],
+      "details": [
+        "Tenue requise si rythme soutenu",
+        "Scénario et placements primordiaux",
+        "Dernier effort long décisif"
+      ]
+    },
+    {
+      "id": "attele_cagnes_2925",
       "type": "Attelé",
       "hippodrome": "Cagnes-sur-Mer",
       "parcours": "2925 m",
-      "titre": "Cagnes-sur-Mer – 2925 m",
+      "title": "Cagnes-sur-Mer — 2925 m",
+      "tags": ["corde-gauche", "tenue", "aléas"],
       "details": [
         "Tenue primordiale",
-        "Parcours tactique",
-        "Dernier effort long"
+        "Dernier effort long décisif",
+        "Beaucoup d’aléas (scénario important)",
+        "Profils combatifs favorisés"
+      ]
+    },
+    {
+      "id": "attele_croise_laroche_2825",
+      "type": "Attelé",
+      "hippodrome": "Croisé-Laroche",
+      "parcours": "2825 m",
+      "title": "Croisé-Laroche — 2825 m",
+      "tags": ["tenue", "regularite"],
+      "details": [
+        "Parcours où la tenue compte",
+        "Positionnement et parcours caché utiles",
+        "Risque de course tactique"
+      ]
+    },
+
+    {
+      "id": "plat_chantilly_1900_psf",
+      "type": "Plat",
+      "hippodrome": "Chantilly",
+      "parcours": "1900 m PSF",
+      "title": "Chantilly — 1900 m PSF",
+      "tags": ["psf", "placement", "vitesse/tenue"],
+      "details": [
+        "PSF : aptitude surface capitale",
+        "Place à la corde importante selon les lots",
+        "Rythme régulier : finish décisif"
+      ]
+    },
+    {
+      "id": "plat_chantilly_1600_gazon",
+      "type": "Plat",
+      "hippodrome": "Chantilly",
+      "parcours": "1600 m Gazon",
+      "title": "Chantilly — 1600 m Gazon",
+      "tags": ["gazon", "vitesse", "parcours"],
+      "details": [
+        "Gazon : dépend beaucoup du terrain",
+        "Vitesse + changement de rythme",
+        "Bien placé = gros avantage"
+      ]
+    },
+    {
+      "id": "plat_compiegne_1600_gazon",
+      "type": "Plat",
+      "hippodrome": "Compiègne",
+      "parcours": "1600 m Gazon",
+      "title": "Compiègne — 1600 m Gazon",
+      "tags": ["gazon", "tactique"],
+      "details": [
+        "Course souvent tactique",
+        "Terrain influence fortement",
+        "Bon numéro + parcours caché utiles"
+      ]
+    },
+    {
+      "id": "plat_compiegne_2000_psf",
+      "type": "Plat",
+      "hippodrome": "Compiègne",
+      "parcours": "2000 m PSF",
+      "title": "Compiègne — 2000 m PSF",
+      "tags": ["psf", "tenue"],
+      "details": [
+        "PSF : aptitude surface clé",
+        "Tenue plus importante à 2000 m",
+        "Finition longue souvent décisive"
+      ]
+    },
+    {
+      "id": "plat_longchamp_2400_gazon",
+      "type": "Plat",
+      "hippodrome": "ParisLongchamp",
+      "parcours": "2400 m Gazon",
+      "title": "ParisLongchamp — 2400 m Gazon",
+      "tags": ["gazon", "tenue", "classe"],
+      "details": [
+        "Tenue et classe primordiales",
+        "Course de rythme : les durs reviennent",
+        "Terrain peut tout changer"
+      ]
+    },
+    {
+      "id": "plat_marseille_borely_2000_gazon",
+      "type": "Plat",
+      "hippodrome": "Marseille-Borély",
+      "parcours": "2000 m Gazon",
+      "title": "Marseille-Borély — 2000 m Gazon",
+      "tags": ["gazon", "placement", "finish"],
+      "details": [
+        "Placement important",
+        "Terrain influence la vitesse finale",
+        "Derniers 400 m décisifs"
+      ]
+    },
+
+    {
+      "id": "obstacles_auteuil_3600_haies",
+      "type": "Obstacles",
+      "hippodrome": "Auteuil",
+      "parcours": "3600 m Haies",
+      "title": "Auteuil — 3600 m Haies",
+      "tags": ["haies", "terrain", "rythme"],
+      "details": [
+        "Terrain = facteur majeur (pénétromètre)",
+        "Rythme + qualité de saut essentiels",
+        "Chevaux durs favorisés si terrain usant"
+      ]
+    },
+    {
+      "id": "obstacles_auteuil_4400_steeple",
+      "type": "Obstacles",
+      "hippodrome": "Auteuil",
+      "parcours": "4400 m Steeple",
+      "title": "Auteuil — 4400 m Steeple",
+      "tags": ["steeple", "tenue", "combat"],
+      "details": [
+        "Steeple : solidité + expérience",
+        "Tenue indispensable",
+        "Terrain lourd = profils de combat"
       ]
     }
   ]
