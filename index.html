@@ -3,183 +3,118 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PMU — Bibliothèque Hippodromes</title>
+  <title>PMU — Assistant (manuel + auto)</title>
   <meta name="theme-color" content="#071625" />
   <style>
     :root{
-      --bg:#071625;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.08);
-      --text:#e8eef6;
-      --muted: rgba(232,238,246,.72);
-      --border: rgba(255,255,255,.12);
-      --accent: rgba(120,180,255,.35);
-      --danger: #ff6b6b;
+      --bg:#071625; --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.10);
+      --text:#e8eef6; --muted: rgba(232,238,246,.72);
+      --border: rgba(255,255,255,.14);
+      --danger:#ff6b6b; --ok:#7CFFB2;
+      --btn: rgba(120,180,255,.18);
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Arial,sans-serif;
-      background: radial-gradient(1200px 700px at 40% -10%, rgba(62,112,255,.35), transparent 55%),
-                  radial-gradient(900px 500px at 70% 10%, rgba(0,255,255,.10), transparent 60%),
-                  var(--bg);
-      color:var(--text);
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:980px;margin:0 auto;padding:22px 14px 42px}
+    h1{font-size:34px;line-height:1.05;margin:10px 0 18px;font-weight:900}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border:1px solid var(--border); border-radius:18px; padding:14px; margin:12px 0}
+    .label{font-size:13px;color:var(--muted);margin:0 0 6px}
+    textarea, input, select, button{
+      width:100%; background:rgba(0,0,0,.22); color:var(--text);
+      border:1px solid var(--border); border-radius:14px;
+      padding:12px; font-size:16px; outline:none;
     }
-    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 42px}
-    h1{font-size:54px;line-height:1.02;margin:10px 0 22px;font-weight:800;letter-spacing:-.02em}
-    @media (max-width:520px){h1{font-size:40px}}
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
-      border:1px solid var(--border);
-      border-radius:22px;
-      padding:18px;
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-    }
-    .grid{display:grid;gap:14px}
-    .row{display:grid;grid-template-columns:1fr;gap:10px}
-    .label{font-size:14px;color:var(--muted);margin:0 0 6px}
-    select, input, textarea, button{
-      width:100%;
-      background: rgba(0,0,0,.25);
-      color:var(--text);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:14px 14px;
-      font-size:16px;
-      outline:none;
-    }
-    select:disabled, input:disabled, textarea:disabled{opacity:.55}
-    textarea{min-height:90px;resize:vertical}
-    .hint{color:var(--muted);font-size:14px;margin-top:6px}
-    .pill{
-      display:inline-block;
-      padding:6px 10px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      background: rgba(255,255,255,.05);
-      color:var(--muted);
-      font-size:13px;
-      margin:0 8px 8px 0;
-    }
-    .sectionTitle{font-size:18px;margin:0 0 10px;font-weight:800}
-    .divider{height:1px;background:rgba(255,255,255,.10);margin:14px 0}
-    .error{color:var(--danger);margin-top:10px;font-weight:700}
-    .btn{
-      background: rgba(120,180,255,.18);
-      border:1px solid rgba(120,180,255,.35);
-      cursor:pointer;
-      font-weight:700;
-    }
+    textarea{min-height:110px; resize:vertical}
+    .row{display:grid; gap:10px}
+    @media (min-width:680px){ .row.cols2{grid-template-columns:1fr 1fr} }
+    .btn{background:var(--btn); border:1px solid rgba(120,180,255,.35); font-weight:800; cursor:pointer}
     .btn:active{transform:scale(.99)}
-    .table{
-      overflow:auto;
-      border:1px solid var(--border);
-      border-radius:18px;
-      background: rgba(0,0,0,.18);
-    }
-    table{width:100%;border-collapse:collapse;min-width:720px}
-    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
-    th{color:var(--muted);font-size:13px;font-weight:700}
-    td input, td select{
-      padding:10px 10px;
-      border-radius:12px;
-      font-size:14px;
-      background: rgba(255,255,255,.06);
-    }
-    .small{font-size:13px;color:var(--muted)}
-    .resultGrid{display:grid;gap:12px}
-    .resultBox{
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:12px 12px;
-      background: rgba(255,255,255,.05);
-    }
-    .resultBox h3{margin:0 0 8px;font-size:16px}
-    .nums{font-size:18px;font-weight:900;letter-spacing:.02em}
+    .error{color:var(--danger); font-weight:800; white-space:pre-line; margin-top:8px}
+    .pill{display:inline-block; padding:6px 10px; border-radius:999px;
+      background:rgba(255,255,255,.06); border:1px solid var(--border); color:var(--muted); margin:0 8px 8px 0; font-size:13px}
+    .big{font-size:18px;font-weight:900}
+    .muted{color:var(--muted)}
+    .divider{height:1px;background:rgba(255,255,255,.10);margin:12px 0}
+
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
+    .chip{border:1px solid var(--border); border-radius:16px; padding:10px; background:rgba(255,255,255,.05); width:100%}
+    @media (min-width:520px){ .chip{width:calc(50% - 5px)} }
+    @media (min-width:820px){ .chip{width:calc(33.333% - 7px)} }
+    .chipTop{display:flex; justify-content:space-between; align-items:center; gap:10px}
+    .chipNum{font-size:22px; font-weight:1000}
+    .chipBtns{display:flex; gap:8px; margin-top:10px}
+    .chipBtns button{padding:10px; border-radius:12px; font-weight:900}
+    .bBase{background:rgba(124,255,178,.16); border:1px solid rgba(124,255,178,.35)}
+    .bChance{background:rgba(120,180,255,.16); border:1px solid rgba(120,180,255,.35)}
+    .bOut{background:rgba(255,214,102,.16); border:1px solid rgba(255,214,102,.35)}
+    .active{outline:2px solid rgba(255,255,255,.35)}
+    .box{border:1px solid var(--border); border-radius:16px; padding:12px; background:rgba(255,255,255,.05)}
+    .nums{font-size:18px;font-weight:1000;letter-spacing:.02em}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>PMU — Bibliothèque<br/>Hippodromes</h1>
+    <h1>PMU — Assistant<br><span class="muted">Coller conditions → Chaos/Scénario auto → Sélection</span></h1>
 
-    <div class="card grid">
-      <div class="row">
-        <div>
-          <div class="label">Type de course</div>
-          <select id="typeSelect">
-            <option value="">Choisir : Attelé / Plat / Obstacles…</option>
-          </select>
-        </div>
-
-        <div>
-          <div class="label">Hippodrome</div>
-          <select id="hippoSelect" disabled>
-            <option value="">Choisir un hippodrome…</option>
-          </select>
-        </div>
-
-        <div>
-          <div class="label">Course / Parcours</div>
-          <select id="parcoursSelect" disabled>
-            <option value="">Choisir un parcours…</option>
-          </select>
-        </div>
-
-        <div class="hint">
-          1) Type → 2) Hippodrome → 3) Parcours → la fiche apparaît + ta grille partants.
-        </div>
-
-        <div id="err" class="error" style="display:none;"></div>
+    <div class="card">
+      <div class="label">1) Colle les conditions de course (copié PMU/Geny)</div>
+      <textarea id="conditionsInput" placeholder="Colle ici le texte complet de la course…"></textarea>
+      <div class="row cols2" style="margin-top:10px">
+        <button id="analyzeBtn" class="btn">Analyser (auto)</button>
+        <button id="resetBtn" class="btn">Réinitialiser</button>
       </div>
+      <div id="errorBox" class="error" style="display:none;"></div>
 
       <div class="divider"></div>
 
-      <div id="fiche" style="display:none;">
-        <div class="sectionTitle" id="ficheTitre"></div>
-
-        <div id="fichePills"></div>
-
-        <div class="sectionTitle" style="margin-top:10px;">Points clés</div>
-        <ul id="ficheDetails"></ul>
-
-        <div class="divider"></div>
-
-        <div class="sectionTitle">Mode manuel — Partants</div>
-        <div class="small">Colle les numéros (ex: <b>1,2,3,4,5,6,7,8</b> ou une liste avec espaces/retours).</div>
-        <textarea id="partantsInput" placeholder="Ex: 1,2,3,4,5,6,7,8"></textarea>
-
-        <div class="row" style="grid-template-columns:1fr 1fr;gap:10px;">
-          <div>
-            <div class="label">Chaos du jour (0 = course “propre”, 10 = gros bazar)</div>
-            <input id="chaosInput" type="number" min="0" max="10" step="1" value="6"/>
-          </div>
-          <div>
-            <div class="label">Scénario</div>
-            <select id="scenarioSelect">
-              <option value="2" selected>Scénario 2 (aléas) — par défaut</option>
-              <option value="1">Scénario 1 (course verrouillée)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row" style="grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
-          <button class="btn" id="buildGridBtn">Créer / Mettre à jour la grille</button>
-          <button class="btn" id="calcBtn">Calculer la sélection</button>
-        </div>
-
-        <div style="margin-top:12px;" id="gridWrap" class="table" style="display:none;"></div>
-
-        <div class="divider"></div>
-
-        <div class="sectionTitle">Sélection automatique</div>
-        <div class="resultGrid" id="results"></div>
-
-        <div class="hint" style="margin-top:10px;">
-          Astuce : tes notes sont sauvegardées automatiquement (localStorage) sur ton téléphone.
+      <div id="autoSummary" style="display:none;">
+        <div class="big">Lecture automatique</div>
+        <div id="summaryPills" style="margin-top:10px"></div>
+        <div class="box" style="margin-top:10px">
+          <div><b>Chaos :</b> <span id="chaosOut"></span></div>
+          <div><b>Scénario conseillé :</b> <span id="scenarioOut"></span></div>
+          <div style="margin-top:8px"><b>Profil de course :</b> <span id="profileOut"></span></div>
+          <div class="muted" style="margin-top:8px" id="reasonsOut"></div>
         </div>
       </div>
     </div>
+
+    <div class="card" id="manualBlock" style="display:none;">
+      <div class="label">2) Partants (numéros) — colle : 1,2,3…</div>
+      <input id="partantsInput" placeholder="Ex: 1,2,3,4,5,6,7,8,9,10,11,12,13">
+
+      <div class="row cols2" style="margin-top:10px">
+        <button id="buildBtn" class="btn">Créer la sélection (Base / Chance / Outsider)</button>
+        <button id="finalBtn" class="btn">Générer résumé</button>
+      </div>
+
+      <div id="chipsWrap" class="chips"></div>
+
+      <div class="divider"></div>
+
+      <div class="big">Résumé</div>
+      <div class="row cols2" style="margin-top:10px">
+        <div class="box">
+          <div><b>Bases</b></div>
+          <div class="nums" id="basesOut">—</div>
+        </div>
+        <div class="box">
+          <div><b>Chances</b></div>
+          <div class="nums" id="chancesOut">—</div>
+        </div>
+        <div class="box">
+          <div><b>Outsiders</b></div>
+          <div class="nums" id="outsOut">—</div>
+        </div>
+        <div class="box">
+          <div><b>Jeu conseillé (simple)</b></div>
+          <div class="muted" id="playOut">—</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script src="./app.js" defer></script>
