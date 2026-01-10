@@ -13,8 +13,10 @@
       --card2:rgba(255,255,255,.04);
       --border:rgba(255,255,255,.12);
       --text:#e9eef7;
-      --muted:rgba(233,238,247,.75);
+      --muted:rgba(233,238,247,.72);
       --danger:#ff6b6b;
+      --ok:#86efac;
+      --btn:#111b2f;
     }
     *{box-sizing:border-box}
     body{
@@ -33,7 +35,7 @@
     h1{
       font-size: 44px;
       line-height: 1.05;
-      margin: 10px 0 16px;
+      margin: 8px 0 14px;
       letter-spacing: -0.02em;
     }
 
@@ -73,6 +75,10 @@
       font-size: 15px;
     }
     button:active{transform: translateY(1px)}
+    .btnPrimary{
+      background: linear-gradient(180deg, rgba(134,239,172,.25), rgba(255,255,255,.03));
+      border-color: rgba(134,239,172,.35);
+    }
 
     .error{
       margin-top: 10px;
@@ -80,44 +86,53 @@
       font-size: 15px;
     }
 
+    /* LIST CARDS */
     .card{
       margin: 14px 0;
-      padding: 18px 18px;
+      padding: 18px;
       border-radius: 22px;
       border: 1px solid var(--border);
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      user-select: none; /* IMPORTANT : évite la sélection / “choix” en cliquant */
+      user-select: none;
+    }
+    .cardBtn{
+      width:100%;
+      text-align:left;
+      background: transparent;
+      border: 0;
+      padding:0;
+      color: var(--text);
+      cursor: pointer;
     }
     .title{
-      font-size: 26px;
-      font-weight: 800;
-      margin: 0 0 10px;
+      font-size: 24px;
+      font-weight: 850;
+      margin: 0 0 6px;
       letter-spacing:-0.01em;
     }
-    ul{
-      margin: 0;
-      padding-left: 22px;
+    .sub{
       color: var(--muted);
-      font-size: 18px;
-      line-height: 1.5;
+      font-size: 14px;
+      margin:0;
     }
-    li{margin: 6px 0}
 
-    .footer{
-      margin-top: 22px;
-      color: rgba(233,238,247,.55);
-      font-size: 12px;
+    /* DETAIL VIEW */
+    .topbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin: 8px 0 14px;
     }
-  </style>
-</head>
-
-<body>
-  <div class="wrap" id="app">
-    <h1>PMU — Bibliothèque Hippodromes</h1>
-    <p style="color:rgba(233,238,247,.75);">Chargement…</p>
-  </div>
-
-  <script src="./app.js"></script>
-</body>
-</html>
+    .back{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      color:var(--text);
+    }
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255
