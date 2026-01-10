@@ -9,13 +9,12 @@
   <style>
     :root{
       --bg:#0b1220;
-      --card:#0f1a2e;
-      --card2:#0c1628;
       --txt:#e7edf6;
       --muted:#b8c4d6;
-      --border:rgba(255,255,255,.08);
+      --border:rgba(255,255,255,.10);
       --shadow: 0 20px 60px rgba(0,0,0,.35);
       --radius:22px;
+      --glass: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
     }
     *{box-sizing:border-box}
     body{
@@ -35,7 +34,7 @@
       font-size: clamp(38px, 6vw, 64px);
       line-height: 1.0;
       margin: 8px 0 18px;
-      font-weight: 900;
+      font-weight: 950;
       letter-spacing: .2px;
     }
     .topbar{
@@ -45,18 +44,12 @@
       align-items:center;
       margin: 12px 0 18px;
     }
-
-    .select{
-      width:100%;
-      position:relative;
-    }
+    .select{ width:100%; position:relative; }
     select{
       width:100%;
       appearance:none;
-      -webkit-appearance:none;
-      -moz-appearance:none;
       border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      background: var(--glass);
       color: var(--txt);
       padding: 16px 46px 16px 16px;
       border-radius: 16px;
@@ -75,14 +68,11 @@
       font-size: 18px;
     }
 
-    .grid{
-      display:grid;
-      gap:14px;
-      margin-top: 14px;
-    }
+    /* LIST */
+    .grid{ display:grid; gap:14px; margin-top: 14px; }
     .card{
       border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      background: var(--glass);
       border-radius: var(--radius);
       padding: 18px 18px 16px;
       box-shadow: var(--shadow);
@@ -90,10 +80,10 @@
       transition: transform .08s ease, border-color .08s ease;
     }
     .card:active{ transform: scale(.99); }
-    .card:hover{ border-color: rgba(255,255,255,.14); }
+    .card:hover{ border-color: rgba(255,255,255,.18); }
 
     .title{
-      font-weight: 900;
+      font-weight: 950;
       font-size: 24px;
       margin: 0 0 10px;
     }
@@ -104,30 +94,8 @@
       font-size: 18px;
       line-height: 1.35;
     }
-    .sectionTitle{
-      margin: 18px 0 10px;
-      font-weight: 900;
-      font-size: 22px;
-    }
-    .pillRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .pill{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      color: var(--txt);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-    .muted{
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.4;
-    }
+
+    /* DETAIL */
     .btn{
       display:inline-flex;
       align-items:center;
@@ -135,22 +103,35 @@
       padding: 10px 14px;
       border-radius: 12px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
+      background: rgba(255,255,255,.06);
       color: var(--txt);
-      font-weight: 800;
+      font-weight: 900;
       font-size: 16px;
       cursor:pointer;
       box-shadow: var(--shadow);
     }
     .btn:active{ transform: scale(.99); }
+    .muted{ color: var(--muted); font-size: 18px; line-height: 1.4; }
+
+    .sectionTitle{ margin: 18px 0 10px; font-weight: 950; font-size: 22px; }
+
+    .pillRow{ display:flex; gap:10px; flex-wrap:wrap; }
+    .pill{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: var(--txt);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 900;
+    }
 
     .error{
       color:#ffb4b4;
-      font-weight:800;
+      font-weight:900;
       margin-top: 10px;
     }
 
-    /* Views */
     .view{ display:none; }
     .view.active{ display:block; }
   </style>
@@ -178,7 +159,7 @@
     <section id="viewDetail" class="view">
       <div class="topbar">
         <button class="btn" id="backBtn">← Retour</button>
-        <div class="muted" style="font-weight:900">Fiche détaillée</div>
+        <div class="muted" style="font-weight:950">Fiche détaillée</div>
       </div>
 
       <h2 id="detailTitle" style="font-size: clamp(34px, 5vw, 56px); margin: 14px 0 10px; font-weight: 950;"></h2>
@@ -195,7 +176,6 @@
     </section>
   </div>
 
-  <!-- IMPORTANT : ton JS -->
   <script src="./app.js" defer></script>
 </body>
 </html>
