@@ -1,39 +1,40 @@
 {
   "courses": [
     {
-      "id": "vincennes_2700_gp",
+      "id": "vincennes_2100",
+      "type": "Attelé",
+      "hippodrome": "Vincennes",
+      "parcours": "2100 m Autostart",
+      "titre": "Vincennes – 2100 m Autostart",
+      "details": [
+        "Départ autostart",
+        "Vitesse primordiale",
+        "Chaos élevé",
+        "Attention aux numéros extérieurs"
+      ]
+    },
+    {
+      "id": "vincennes_2700",
       "type": "Attelé",
       "hippodrome": "Vincennes",
       "parcours": "2700 m Grande Piste",
-      "titre": "Vincennes – 2700 m Grande Piste",
+      "titre": "Vincennes – 2700 m",
       "details": [
         "Tenue indispensable",
         "Course sélective",
-        "Chevaux durs favorisés"
+        "Moins de chaos"
       ]
     },
     {
-      "id": "chantilly_1600_psf",
-      "type": "Plat",
-      "hippodrome": "Chantilly",
-      "parcours": "1600 m PSF",
-      "titre": "Chantilly – 1600 m PSF",
+      "id": "cagnes_2925",
+      "type": "Attelé",
+      "hippodrome": "Cagnes-sur-Mer",
+      "parcours": "2925 m",
+      "titre": "Cagnes-sur-Mer – 2925 m",
       "details": [
-        "PSF régulière",
-        "Vitesse et placement",
-        "Aptitude surface primordiale"
-      ]
-    },
-    {
-      "id": "auteuil_3600_haies",
-      "type": "Obstacles",
-      "hippodrome": "Auteuil",
-      "parcours": "3600 m Haies",
-      "titre": "Auteuil – 3600 m Haies",
-      "details": [
-        "Qualité de saut",
-        "Terrain déterminant",
-        "Course exigeante"
+        "Tenue primordiale",
+        "Parcours tactique",
+        "Dernier effort long"
       ]
     }
   ]
