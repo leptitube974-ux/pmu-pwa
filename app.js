@@ -1,157 +1,180 @@
-(async function () {
-  const app = document.getElementById("app");
+/* PMU — Bibliothèque Hippodromes
+   - List view + select filter
+   - Detail view (clic carte) avec Profils favorisés
+*/
 
-  const escapeHtml = (s) =>
-    String(s ?? "").replace(/[&<>"']/g, (m) => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    }[m]));
+const $ = (id) => document.getElementById(id);
 
-  // Hash routing: #/detail/<id>
-  const getRouteId = () => {
-    const h = (window.location.hash || "").trim();
-    const m = h.match(/^#\/detail\/(.+)$/);
-    return m ? decodeURIComponent(m[1]) : null;
-  };
+const viewList = $("viewList");
+const viewDetail = $("viewDetail");
 
-  const goHome = () => { window.location.hash = ""; };
-  const goDetail = (id) => { window.location.hash = `#/detail/${encodeURIComponent(id)}`; };
+const filterSelect = $("filterSelect");
+const listContainer = $("listContainer");
+const listError = $("listError");
 
-  // Load JSON
-  let data;
-  try {
-    const res = await fetch("./library.json?v=" + Date.now(), { cache: "no-store" });
-    if (!res.ok) throw new Error("library.json introuvable");
-    data = await res.json();
-  } catch (e) {
-    app.innerHTML = `
-      <h1>PMU — Bibliothèque Hippodromes</h1>
-      <div class="error">Erreur : library.json invalide ou introuvable.</div>
-      <div class="footer">Vérifie que <b>library.json</b> existe à la racine du repo.</div>
-    `;
+const backBtn = $("backBtn");
+const detailTitle = $("detailTitle");
+const detailBullets = $("detailBullets");
+const detailProfils = $("detailProfils");
+const detailNote = $("detailNote");
+
+let DATA = null;
+let CURRENT_FILTER = "__all__";
+
+function showView(which) {
+  if (which === "list") {
+    viewList.classList.add("active");
+    viewDetail.classList.remove("active");
+    window.scrollTo({ top: 0, behavior: "instant" });
+  } else {
+    viewDetail.classList.add("active");
+    viewList.classList.remove("active");
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function renderSelectOptions(items) {
+  // Reset options (keep first "Tous les hippodromes")
+  filterSelect.innerHTML = `<option value="__all__">Tous les hippodromes</option>`;
+
+  for (const it of items) {
+    const opt = document.createElement("option");
+    opt.value = it.id;
+    opt.textContent = it.title;
+    filterSelect.appendChild(opt);
+  }
+
+  filterSelect.value = CURRENT_FILTER;
+}
+
+function makeCard(item) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const title = document.createElement("div");
+  title.className = "title";
+  title.textContent = item.title;
+
+  const ul = document.createElement("ul");
+  ul.className = "bullets";
+  for (const d of (item.details || []).slice(0, 4)) {
+    const li = document.createElement("li");
+    li.textContent = d;
+    ul.appendChild(li);
+  }
+
+  card.appendChild(title);
+  card.appendChild(ul);
+
+  card.addEventListener("click", () => openDetail(item.id));
+  return card;
+}
+
+function renderList() {
+  if (!DATA) return;
+  listError.style.display = "none";
+  listContainer.innerHTML = "";
+
+  const items = DATA.hippodromes || [];
+  const filtered = (CURRENT_FILTER === "__all__")
+    ? items
+    : items.filter(x => x.id === CURRENT_FILTER);
+
+  if (filtered.length === 0) {
+    listError.textContent = "Aucun hippodrome trouvé pour ce filtre.";
+    listError.style.display = "block";
     return;
   }
 
-  const hippodromes = Array.isArray(data.hippodromes) ? data.hippodromes : [];
+  for (const it of filtered) {
+    listContainer.appendChild(makeCard(it));
+  }
+}
 
-  // UI: Home (list + dropdown filter)
-  function renderHome(selectedId = "all") {
-    const options = hippodromes.map(h =>
-      `<option value="${escapeHtml(h.id)}">${escapeHtml(h.titre)}</option>`
-    ).join("");
+function openDetail(id) {
+  const items = DATA?.hippodromes || [];
+  const item = items.find(x => x.id === id);
+  if (!item) return;
 
-    const filtered = (selectedId === "all")
-      ? hippodromes
-      : hippodromes.filter(h => h.id === selectedId);
+  detailTitle.textContent = item.title;
 
-    const cards = filtered.map(h => `
-      <div class="card">
-        <button class="cardBtn" type="button" data-id="${escapeHtml(h.id)}">
-          <div class="title">${escapeHtml(h.titre)}</div>
-          <p class="sub">Appuie pour ouvrir la fiche détaillée</p>
-        </button>
-      </div>
-    `).join("");
-
-    app.innerHTML = `
-      <h1>PMU — Bibliothèque Hippodromes</h1>
-
-      <div class="row">
-        <div class="field">
-          <label class="label" for="hippoSelect">Filtrer la liste</label>
-          <select id="hippoSelect">
-            <option value="all">Tous les hippodromes</option>
-            ${options}
-          </select>
-        </div>
-
-        <button id="resetBtn">Réinitialiser</button>
-      </div>
-
-      <div id="list">${cards || `<p style="color:rgba(233,238,247,.75)">Aucun résultat.</p>`}</div>
-
-      <div class="footer">Astuce : tu peux partager une fiche via l’URL (hash).</div>
-    `;
-
-    // Set select value
-    const select = document.getElementById("hippoSelect");
-    select.value = selectedId;
-
-    // Events: dropdown
-    select.addEventListener("change", () => {
-      const val = select.value;
-      renderHome(val);
-      // On reste sur la home (pas de hash)
-      goHome();
-      // Ne pas scroller tout en bas
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    // Events: reset
-    document.getElementById("resetBtn").addEventListener("click", () => {
-      renderHome("all");
-      goHome();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    // Events: open detail
-    document.querySelectorAll(".cardBtn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.getAttribute("data-id");
-        if (id) goDetail(id);
-      });
-    });
+  // bullets
+  detailBullets.innerHTML = "";
+  for (const d of (item.details || [])) {
+    const li = document.createElement("li");
+    li.textContent = d;
+    detailBullets.appendChild(li);
   }
 
-  // UI: Detail page
-  function renderDetail(id) {
-    const h = hippodromes.find(x => x.id === id);
-    if (!h) {
-      app.innerHTML = `
-        <div class="topbar">
-          <button class="back" id="backBtn">← Retour</button>
-          <span class="pill">Fiche introuvable</span>
-        </div>
-        <div class="panel">
-          <div class="title">Ce profil n’existe pas</div>
-          <p class="sub">Vérifie l’identifiant dans l’URL.</p>
-        </div>
-      `;
-      document.getElementById("backBtn").addEventListener("click", goHome);
-      return;
+  // profils (pills)
+  detailProfils.innerHTML = "";
+  const profils = item.profils || [];
+  if (profils.length === 0) {
+    const p = document.createElement("div");
+    p.className = "muted";
+    p.textContent = "Pas encore de profils renseignés.";
+    detailProfils.appendChild(p);
+  } else {
+    for (const pr of profils) {
+      const pill = document.createElement("span");
+      pill.className = "pill";
+      pill.textContent = pr;
+      detailProfils.appendChild(pill);
     }
-
-    const bullets = (h.details || []).map(d => `<li>${escapeHtml(d)}</li>`).join("");
-
-    app.innerHTML = `
-      <div class="topbar">
-        <button class="back" id="backBtn">← Retour</button>
-        <span class="pill">Fiche détaillée</span>
-      </div>
-
-      <h1 style="font-size:34px;margin:6px 0 14px;">${escapeHtml(h.titre)}</h1>
-
-      <div class="panel">
-        <div class="title" style="font-size:20px;margin:0 0 8px;">Points clés</div>
-        <ul>${bullets || "<li>Aucun détail.</li>"}</ul>
-      </div>
-
-      <div class="footer">Prochaine étape : ajouter “chaos / scénario / tags” sur cette fiche.</div>
-    `;
-
-    document.getElementById("backBtn").addEventListener("click", goHome);
   }
 
-  // Router
-  function renderByRoute() {
-    const id = getRouteId();
-    if (id) renderDetail(id);
-    else renderHome("all");
-  }
+  detailNote.textContent = item.note || "";
 
-  window.addEventListener("hashchange", renderByRoute);
-  renderByRoute();
-})();
+  showView("detail");
+}
+
+async function loadLibrary() {
+  try {
+    const res = await fetch("./library.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("library.json introuvable");
+    const json = await res.json();
+    if (!json || !Array.isArray(json.hippodromes)) {
+      throw new Error("library.json invalide (structure attendue: { hippodromes: [] })");
+    }
+    DATA = json;
+
+    // options select
+    renderSelectOptions(DATA.hippodromes);
+
+    // render initial list
+    renderList();
+  } catch (e) {
+    listContainer.innerHTML = "";
+    listError.textContent = "Erreur : library.json invalide ou introuvable.";
+    listError.style.display = "block";
+    console.error(e);
+  }
+}
+
+// EVENTS
+filterSelect.addEventListener("change", (e) => {
+  CURRENT_FILTER = e.target.value;
+  // IMPORTANT: si on choisit un hippodrome spécifique, on affiche directement sa fiche
+  if (CURRENT_FILTER !== "__all__") {
+    openDetail(CURRENT_FILTER);
+  } else {
+    showView("list");
+    renderList();
+  }
+});
+
+backBtn.addEventListener("click", () => {
+  // retour à la liste, en gardant le filtre
+  showView("list");
+  renderList();
+});
+
+// INIT
+loadLibrary();
