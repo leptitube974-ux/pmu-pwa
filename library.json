@@ -1,43 +1,135 @@
 {
-  "courses": [
+  "hippodromes": [
     {
-      "id": "attel_vincennes_2100",
+      "id": "vin_2850_gp",
       "type": "Course Attelé",
       "hippodrome": "Vincennes",
-      "title": "Vincennes — 2100 m Autostart",
+      "title": "Vincennes — 2850 m Grande Piste",
       "details": [
-        "Départ autostart",
-        "Vitesse primordiale"
+        "Parcours de tenue (sélectif)",
+        "Scénario très important (rythme / relais)",
+        "Les attentistes peuvent revenir si train soutenu",
+        "Attention aux efforts prématurés (montée + dernier km)"
       ]
     },
     {
-      "id": "attel_vincennes_2700",
+      "id": "eng_2150_autostart",
       "type": "Course Attelé",
-      "hippodrome": "Vincennes",
-      "title": "Vincennes — 2700 m Grande Piste",
+      "hippodrome": "Enghien",
+      "title": "Enghien — 2150 m Autostart",
       "details": [
-        "Tenue indispensable",
-        "Course sélective"
+        "Départ autostart : les numéros comptent",
+        "Vitesse + placement primordial",
+        "Course souvent rythmée, dépassements possibles",
+        "Attention aux chevaux enfermés côté corde"
       ]
     },
     {
-      "id": "obs_auteuil_base",
-      "type": "Course Haies & Steeple",
-      "hippodrome": "Auteuil",
-      "title": "Auteuil — Haies",
+      "id": "eng_2875",
+      "type": "Course Attelé",
+      "hippodrome": "Enghien",
+      "title": "Enghien — 2875 m",
       "details": [
-        "Terrain important",
-        "Sauts décisifs"
+        "Tenue importante",
+        "Course de mouvement (placement + relais)",
+        "Les finishers reviennent si ça roule",
+        "Attention aux parcours le nez au vent"
       ]
     },
     {
-      "id": "plat_chantilly_base",
+      "id": "croise_laroche_2825",
+      "type": "Course Attelé",
+      "hippodrome": "Croisé-Laroche",
+      "title": "Croisé-Laroche — 2825 m",
+      "details": [
+        "Course de tenue / rythme régulier",
+        "Placement et parcours caché importants",
+        "Les chevaux durs et réguliers sont favorisés",
+        "Attention aux tournants (perte de terrain si nez au vent)"
+      ]
+    },
+    {
+      "id": "cha_psf_1900",
       "type": "Course Plat",
       "hippodrome": "Chantilly",
-      "title": "Chantilly — Plat",
+      "title": "Chantilly — PSF",
       "details": [
-        "Vitesse finale",
-        "Placement clé"
+        "PSF : régularité et vitesse de base",
+        "Numéro de corde + placement importants",
+        "Parcours caché souvent payant",
+        "Attention aux profils “PSF confirmés”"
+      ]
+    },
+    {
+      "id": "cha_gazon",
+      "type": "Course Plat",
+      "hippodrome": "Chantilly",
+      "title": "Chantilly — Gazon",
+      "details": [
+        "Gazon : aptitude au terrain clé (souple/collant)",
+        "Corde + déroulement de course importants",
+        "Les changements de rythme font la différence",
+        "Attention aux chevaux dépendants du bon terrain"
+      ]
+    },
+    {
+      "id": "comp_psf",
+      "type": "Course Plat",
+      "hippodrome": "Compiègne",
+      "title": "Compiègne — PSF",
+      "details": [
+        "PSF : profils réguliers et maniables",
+        "Positionnement et vitesse de base importants",
+        "Les attentistes peuvent jaillir si train élevé",
+        "Attention aux chevaux peu confirmés sur la surface"
+      ]
+    },
+    {
+      "id": "comp_gazon",
+      "type": "Course Plat",
+      "hippodrome": "Compiègne",
+      "title": "Compiègne — Gazon",
+      "details": [
+        "Gazon : terrain déterminant",
+        "Parcours et placement essentiels",
+        "Course parfois tactique (faux train possible)",
+        "Attention aux chevaux “à l’aise corde à gauche”"
+      ]
+    },
+    {
+      "id": "longchamp_gazon",
+      "type": "Course Plat",
+      "hippodrome": "Longchamp",
+      "title": "ParisLongchamp — Gazon",
+      "details": [
+        "Grand hippodrome : rythme + placement",
+        "Ligne droite : accélération décisive",
+        "Les chevaux de classe finissent fort",
+        "Attention aux courses tactiques (train irrégulier)"
+      ]
+    },
+    {
+      "id": "auteuil_obstacle",
+      "type": "Course Haies & Steeple",
+      "hippodrome": "Auteuil",
+      "title": "Auteuil — Haies / Steeple",
+      "details": [
+        "Obstacle : classe + aptitude + courage",
+        "Terrain (pénétromètre) très impactant",
+        "Risque de fautes / chutes : aléas élevés",
+        "Chevaux durs et jockeys expérimentés avantagés"
+      ]
+    },
+    {
+      "id": "marseille_borely_plat",
+      "type": "Course Plat",
+      "hippodrome": "Marseille-Borély",
+      "title": "Marseille-Borély — Plat",
+      "details": [
+        "Hippodrome souvent tactique",
+        "Placement et parcours caché importants",
+        "Attention aux numéros de corde",
+        "Les chevaux réguliers dans la région comptent"
       ]
     }
   ]
