@@ -10,121 +10,148 @@
       "'": "&#039;",
     }[m]));
 
-  const setQuery = (key, value) => {
-    const url = new URL(window.location.href);
-    if (!value || value === "all") url.searchParams.delete(key);
-    else url.searchParams.set(key, value);
-    window.history.replaceState({}, "", url.toString());
+  // Hash routing: #/detail/<id>
+  const getRouteId = () => {
+    const h = (window.location.hash || "").trim();
+    const m = h.match(/^#\/detail\/(.+)$/);
+    return m ? decodeURIComponent(m[1]) : null;
   };
 
-  const getQuery = (key) => new URL(window.location.href).searchParams.get(key);
+  const goHome = () => { window.location.hash = ""; };
+  const goDetail = (id) => { window.location.hash = `#/detail/${encodeURIComponent(id)}`; };
 
-  app.innerHTML = `
-    <h1>PMU — Bibliothèque Hippodromes</h1>
-
-    <div style="display:flex; gap:10px; align-items:flex-end; margin:14px 0 10px 0;">
-      <div style="flex:1;">
-        <label class="label" for="hippoSelect">Choisir un hippodrome</label>
-        <select id="hippoSelect">
-          <option value="all">Tous les hippodromes</option>
-        </select>
-      </div>
-
-      <button id="resetBtn" style="
-        padding:12px 14px;
-        border-radius:14px;
-        border:1px solid rgba(255,255,255,.12);
-        background:rgba(255,255,255,.04);
-        color:#e9eef7;
-        font-size:14px;
-      ">Réinitialiser</button>
-    </div>
-
-    <div id="list"></div>
-    <div id="err" class="error" style="display:none;"></div>
-  `;
-
-  const select = document.getElementById("hippoSelect");
-  const list = document.getElementById("list");
-  const err = document.getElementById("err");
-  const resetBtn = document.getElementById("resetBtn");
-
-  function showError(msg) {
-    err.style.display = "block";
-    err.textContent = msg;
-  }
-  function hideError() {
-    err.style.display = "none";
-    err.textContent = "";
-  }
-
-  function renderCards(items) {
-    list.innerHTML = "";
-
-    if (!items || !items.length) {
-      list.innerHTML = `<p style="opacity:.85;">Aucun hippodrome trouvé.</p>`;
-      return;
-    }
-
-    // Cartes "statique" : pas d'accordéon, pas de clic
-    const html = items.map(h => `
-      <div class="card static-card">
-        <div class="title">${escapeHtml(h.titre)}</div>
-        <ul>
-          ${(h.details || []).map(d => `<li>${escapeHtml(d)}</li>`).join("")}
-        </ul>
-      </div>
-    `).join("");
-
-    list.innerHTML = html;
-  }
-
+  // Load JSON
   let data;
   try {
     const res = await fetch("./library.json?v=" + Date.now(), { cache: "no-store" });
     if (!res.ok) throw new Error("library.json introuvable");
     data = await res.json();
   } catch (e) {
-    showError("Erreur : library.json invalide ou introuvable.");
+    app.innerHTML = `
+      <h1>PMU — Bibliothèque Hippodromes</h1>
+      <div class="error">Erreur : library.json invalide ou introuvable.</div>
+      <div class="footer">Vérifie que <b>library.json</b> existe à la racine du repo.</div>
+    `;
     return;
   }
 
-  hideError();
-
   const hippodromes = Array.isArray(data.hippodromes) ? data.hippodromes : [];
 
-  // Remplit le menu
-  hippodromes.forEach((h) => {
-    const opt = document.createElement("option");
-    opt.value = h.id;
-    opt.textContent = h.titre;
-    select.appendChild(opt);
-  });
+  // UI: Home (list + dropdown filter)
+  function renderHome(selectedId = "all") {
+    const options = hippodromes.map(h =>
+      `<option value="${escapeHtml(h.id)}">${escapeHtml(h.titre)}</option>`
+    ).join("");
 
-  function applyFilter() {
-    const value = select.value;
-    setQuery("h", value);
+    const filtered = (selectedId === "all")
+      ? hippodromes
+      : hippodromes.filter(h => h.id === selectedId);
 
-    if (value === "all") {
-      renderCards(hippodromes);
-      return;
-    }
-    const found = hippodromes.find(h => h.id === value);
-    renderCards(found ? [found] : []);
+    const cards = filtered.map(h => `
+      <div class="card">
+        <button class="cardBtn" type="button" data-id="${escapeHtml(h.id)}">
+          <div class="title">${escapeHtml(h.titre)}</div>
+          <p class="sub">Appuie pour ouvrir la fiche détaillée</p>
+        </button>
+      </div>
+    `).join("");
+
+    app.innerHTML = `
+      <h1>PMU — Bibliothèque Hippodromes</h1>
+
+      <div class="row">
+        <div class="field">
+          <label class="label" for="hippoSelect">Filtrer la liste</label>
+          <select id="hippoSelect">
+            <option value="all">Tous les hippodromes</option>
+            ${options}
+          </select>
+        </div>
+
+        <button id="resetBtn">Réinitialiser</button>
+      </div>
+
+      <div id="list">${cards || `<p style="color:rgba(233,238,247,.75)">Aucun résultat.</p>`}</div>
+
+      <div class="footer">Astuce : tu peux partager une fiche via l’URL (hash).</div>
+    `;
+
+    // Set select value
+    const select = document.getElementById("hippoSelect");
+    select.value = selectedId;
+
+    // Events: dropdown
+    select.addEventListener("change", () => {
+      const val = select.value;
+      renderHome(val);
+      // On reste sur la home (pas de hash)
+      goHome();
+      // Ne pas scroller tout en bas
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Events: reset
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      renderHome("all");
+      goHome();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Events: open detail
+    document.querySelectorAll(".cardBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-id");
+        if (id) goDetail(id);
+      });
+    });
   }
 
-  // Init depuis URL
-  const initial = getQuery("h") || "all";
-  if ([...select.options].some(o => o.value === initial)) select.value = initial;
-  else select.value = "all";
+  // UI: Detail page
+  function renderDetail(id) {
+    const h = hippodromes.find(x => x.id === id);
+    if (!h) {
+      app.innerHTML = `
+        <div class="topbar">
+          <button class="back" id="backBtn">← Retour</button>
+          <span class="pill">Fiche introuvable</span>
+        </div>
+        <div class="panel">
+          <div class="title">Ce profil n’existe pas</div>
+          <p class="sub">Vérifie l’identifiant dans l’URL.</p>
+        </div>
+      `;
+      document.getElementById("backBtn").addEventListener("click", goHome);
+      return;
+    }
 
-  select.addEventListener("change", applyFilter);
+    const bullets = (h.details || []).map(d => `<li>${escapeHtml(d)}</li>`).join("");
 
-  resetBtn.addEventListener("click", () => {
-    select.value = "all";
-    applyFilter();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+    app.innerHTML = `
+      <div class="topbar">
+        <button class="back" id="backBtn">← Retour</button>
+        <span class="pill">Fiche détaillée</span>
+      </div>
 
-  applyFilter();
+      <h1 style="font-size:34px;margin:6px 0 14px;">${escapeHtml(h.titre)}</h1>
+
+      <div class="panel">
+        <div class="title" style="font-size:20px;margin:0 0 8px;">Points clés</div>
+        <ul>${bullets || "<li>Aucun détail.</li>"}</ul>
+      </div>
+
+      <div class="footer">Prochaine étape : ajouter “chaos / scénario / tags” sur cette fiche.</div>
+    `;
+
+    document.getElementById("backBtn").addEventListener("click", goHome);
+  }
+
+  // Router
+  function renderByRoute() {
+    const id = getRouteId();
+    if (id) renderDetail(id);
+    else renderHome("all");
+  }
+
+  window.addEventListener("hashchange", renderByRoute);
+  renderByRoute();
 })();
