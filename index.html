@@ -3,120 +3,156 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PMU — Assistant (manuel + auto)</title>
-  <meta name="theme-color" content="#071625" />
+  <title>PMU — Assistant</title>
   <style>
     :root{
-      --bg:#071625; --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.10);
-      --text:#e8eef6; --muted: rgba(232,238,246,.72);
-      --border: rgba(255,255,255,.14);
-      --danger:#ff6b6b; --ok:#7CFFB2;
-      --btn: rgba(120,180,255,.18);
+      --bg:#07111f; --card:#0c1f37; --card2:#0a1a2f;
+      --txt:#e9eef8; --muted:#a9b7d0;
+      --accent:#6aa7ff; --border:rgba(255,255,255,.08);
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:980px;margin:0 auto;padding:22px 14px 42px}
-    h1{font-size:34px;line-height:1.05;margin:10px 0 18px;font-weight:900}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
-      border:1px solid var(--border); border-radius:18px; padding:14px; margin:12px 0}
-    .label{font-size:13px;color:var(--muted);margin:0 0 6px}
-    textarea, input, select, button{
-      width:100%; background:rgba(0,0,0,.22); color:var(--text);
-      border:1px solid var(--border); border-radius:14px;
-      padding:12px; font-size:16px; outline:none;
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:radial-gradient(900px 600px at 30% 0%, rgba(106,167,255,.18), transparent 55%),
+                 radial-gradient(900px 600px at 80% 30%, rgba(46,204,113,.10), transparent 60%),
+                 var(--bg);
+      color:var(--txt);
     }
-    textarea{min-height:110px; resize:vertical}
-    .row{display:grid; gap:10px}
-    @media (min-width:680px){ .row.cols2{grid-template-columns:1fr 1fr} }
-    .btn{background:var(--btn); border:1px solid rgba(120,180,255,.35); font-weight:800; cursor:pointer}
-    .btn:active{transform:scale(.99)}
-    .error{color:var(--danger); font-weight:800; white-space:pre-line; margin-top:8px}
-    .pill{display:inline-block; padding:6px 10px; border-radius:999px;
-      background:rgba(255,255,255,.06); border:1px solid var(--border); color:var(--muted); margin:0 8px 8px 0; font-size:13px}
-    .big{font-size:18px;font-weight:900}
-    .muted{color:var(--muted)}
-    .divider{height:1px;background:rgba(255,255,255,.10);margin:12px 0}
+    .wrap{max-width:980px; margin:0 auto; padding:18px 14px 40px}
+    h1{font-size:44px; line-height:1.05; margin:10px 0 12px}
+    .sub{color:var(--muted); margin:0 0 14px; font-size:14px}
 
-    .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
-    .chip{border:1px solid var(--border); border-radius:16px; padding:10px; background:rgba(255,255,255,.05); width:100%}
-    @media (min-width:520px){ .chip{width:calc(50% - 5px)} }
-    @media (min-width:820px){ .chip{width:calc(33.333% - 7px)} }
-    .chipTop{display:flex; justify-content:space-between; align-items:center; gap:10px}
-    .chipNum{font-size:22px; font-weight:1000}
-    .chipBtns{display:flex; gap:8px; margin-top:10px}
-    .chipBtns button{padding:10px; border-radius:12px; font-weight:900}
-    .bBase{background:rgba(124,255,178,.16); border:1px solid rgba(124,255,178,.35)}
-    .bChance{background:rgba(120,180,255,.16); border:1px solid rgba(120,180,255,.35)}
-    .bOut{background:rgba(255,214,102,.16); border:1px solid rgba(255,214,102,.35)}
-    .active{outline:2px solid rgba(255,255,255,.35)}
-    .box{border:1px solid var(--border); border-radius:16px; padding:12px; background:rgba(255,255,255,.05)}
-    .nums{font-size:18px;font-weight:1000;letter-spacing:.02em}
+    .tabs{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin:10px 0 14px;
+    }
+    .tab{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-weight:800;
+    }
+    .tab.active{
+      background:rgba(106,167,255,.18);
+      border-color:rgba(106,167,255,.35);
+      color:var(--txt);
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.05), transparent 60%), var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+
+    .hidden{display:none !important;}
+
+    label{display:block; font-size:13px; color:var(--muted); margin:10px 0 6px}
+    textarea, input, select{
+      width:100%;
+      padding:12px 12px;
+      background:var(--card2);
+      color:var(--txt);
+      border:1px solid var(--border);
+      border-radius:12px;
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height:150px; resize:vertical; line-height:1.25}
+    button{
+      width:100%;
+      padding:12px 14px;
+      background:rgba(106,167,255,.22);
+      border:1px solid rgba(106,167,255,.35);
+      color:var(--txt);
+      border-radius:14px;
+      font-weight:800;
+      font-size:15px;
+      margin-top:12px;
+    }
+    .note{color:var(--muted); font-size:13px; line-height:1.35; margin-top:10px}
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <h1>PMU — Assistant<br><span class="muted">Coller conditions → Chaos/Scénario auto → Sélection</span></h1>
+    <h1>PMU — Assistant</h1>
+    <p class="sub">Choisis ce que tu veux faire : Bibliothèque / Assistant / Grille.</p>
 
-    <div class="card">
-      <div class="label">1) Colle les conditions de course (copié PMU/Geny)</div>
-      <textarea id="conditionsInput" placeholder="Colle ici le texte complet de la course…"></textarea>
-      <div class="row cols2" style="margin-top:10px">
-        <button id="analyzeBtn" class="btn">Analyser (auto)</button>
-        <button id="resetBtn" class="btn">Réinitialiser</button>
-      </div>
-      <div id="errorBox" class="error" style="display:none;"></div>
-
-      <div class="divider"></div>
-
-      <div id="autoSummary" style="display:none;">
-        <div class="big">Lecture automatique</div>
-        <div id="summaryPills" style="margin-top:10px"></div>
-        <div class="box" style="margin-top:10px">
-          <div><b>Chaos :</b> <span id="chaosOut"></span></div>
-          <div><b>Scénario conseillé :</b> <span id="scenarioOut"></span></div>
-          <div style="margin-top:8px"><b>Profil de course :</b> <span id="profileOut"></span></div>
-          <div class="muted" style="margin-top:8px" id="reasonsOut"></div>
-        </div>
-      </div>
+    <div class="tabs">
+      <button class="tab active" id="tab-home" type="button">🏠 Accueil</button>
+      <button class="tab" id="tab-biblio" type="button">📚 Bibliothèque</button>
+      <button class="tab" id="tab-assistant" type="button">🤖 Assistant (coller conditions)</button>
+      <button class="tab" id="tab-grille" type="button">🧾 Grille / Sélection</button>
     </div>
 
-    <div class="card" id="manualBlock" style="display:none;">
-      <div class="label">2) Partants (numéros) — colle : 1,2,3…</div>
-      <input id="partantsInput" placeholder="Ex: 1,2,3,4,5,6,7,8,9,10,11,12,13">
+    <!-- HOME -->
+    <section class="card" id="view-home">
+      <h2 style="margin:0 0 8px;">Accueil</h2>
+      <p class="note" style="margin:0;">
+        1) <b>Bibliothèque</b> = choisir hippodrome / parcours (tes fiches).<br>
+        2) <b>Assistant</b> = coller les conditions → chaos + scénario automatiques.<br>
+        3) <b>Grille</b> = coller partants + notes → base / chances / outsiders.
+      </p>
+    </section>
 
-      <div class="row cols2" style="margin-top:10px">
-        <button id="buildBtn" class="btn">Créer la sélection (Base / Chance / Outsider)</button>
-        <button id="finalBtn" class="btn">Générer résumé</button>
-      </div>
+    <!-- BIBLIO (placeholder si tu as déjà une page biblio, colle ton bloc ici) -->
+    <section class="card hidden" id="view-biblio">
+      <h2 style="margin:0 0 8px;">Bibliothèque</h2>
+      <p class="note" style="margin:0;">
+        Ici tu remettras ta bibliothèque (menus déroulants Attelé/Plat/Obstacles → Hippodrome → Parcours).
+      </p>
+    </section>
 
-      <div id="chipsWrap" class="chips"></div>
+    <!-- ASSISTANT -->
+    <section class="card hidden" id="view-assistant">
+      <h2 style="margin:0 0 8px;">Assistant : conditions → chaos/scénario</h2>
+      <label>Colle les conditions de course (copié PMU/Geny)</label>
+      <textarea id="raceText" placeholder="Colle ici le texte complet de la course..."></textarea>
+      <button id="analyzeBtn" type="button">Analyser (auto)</button>
+      <button id="resetBtn" type="button">Réinitialiser</button>
+      <div id="assistantOut" class="note"></div>
+    </section>
 
-      <div class="divider"></div>
-
-      <div class="big">Résumé</div>
-      <div class="row cols2" style="margin-top:10px">
-        <div class="box">
-          <div><b>Bases</b></div>
-          <div class="nums" id="basesOut">—</div>
-        </div>
-        <div class="box">
-          <div><b>Chances</b></div>
-          <div class="nums" id="chancesOut">—</div>
-        </div>
-        <div class="box">
-          <div><b>Outsiders</b></div>
-          <div class="nums" id="outsOut">—</div>
-        </div>
-        <div class="box">
-          <div><b>Jeu conseillé (simple)</b></div>
-          <div class="muted" id="playOut">—</div>
-        </div>
-      </div>
-    </div>
-
+    <!-- GRILLE (placeholder, si tu as déjà la grille, colle ton bloc ici) -->
+    <section class="card hidden" id="view-grille">
+      <h2 style="margin:0 0 8px;">Grille / Sélection</h2>
+      <p class="note" style="margin:0;">
+        Ici tu remettras la grille (partants + critères) — ou on la branche après.
+      </p>
+    </section>
   </div>
 
   <script src="./app.js" defer></script>
+
+  <script>
+    // Tabs / navigation simple
+    const tabs = [
+      ["tab-home","view-home"],
+      ["tab-biblio","view-biblio"],
+      ["tab-assistant","view-assistant"],
+      ["tab-grille","view-grille"],
+    ];
+
+    function show(viewId, tabId){
+      for(const [t,v] of tabs){
+        document.getElementById(v).classList.toggle("hidden", v !== viewId);
+        document.getElementById(t).classList.toggle("active", t === tabId);
+      }
+      // option: on remonte en haut
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    document.getElementById("tab-home").addEventListener("click", ()=>show("view-home","tab-home"));
+    document.getElementById("tab-biblio").addEventListener("click", ()=>show("view-biblio","tab-biblio"));
+    document.getElementById("tab-assistant").addEventListener("click", ()=>show("view-assistant","tab-assistant"));
+    document.getElementById("tab-grille").addEventListener("click", ()=>show("view-grille","tab-grille"));
+
+    // Toujours démarrer sur Accueil
+    show("view-home","tab-home");
+  </script>
 </body>
 </html>
