@@ -9,6 +9,7 @@
       --bg:#07111f; --card:#0c1f37; --card2:#0a1a2f;
       --txt:#e9eef8; --muted:#a9b7d0;
       --accent:#6aa7ff; --border:rgba(255,255,255,.08);
+      --green:#6bcb77; --yellow:#ffd93d; --red:#ff6b6b; --orange:#ff9f43;
     }
     *{box-sizing:border-box}
     body{
@@ -18,141 +19,274 @@
                  var(--bg);
       color:var(--txt);
     }
-    .wrap{max-width:980px; margin:0 auto; padding:18px 14px 40px}
-    h1{font-size:44px; line-height:1.05; margin:10px 0 12px}
+    .wrap{max-width:980px; margin:0 auto; padding:18px 14px 60px}
+    h1{font-size:38px; line-height:1.05; margin:10px 0 10px}
     .sub{color:var(--muted); margin:0 0 14px; font-size:14px}
 
-    .tabs{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin:10px 0 14px;
-    }
+    /* ---- TABS ---- */
+    .tabs{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 16px}
     .tab{
-      padding:10px 12px;
-      border-radius:999px;
+      padding:9px 14px; border-radius:999px;
       border:1px solid var(--border);
       background:rgba(255,255,255,.04);
-      color:var(--muted);
-      font-weight:800;
+      color:var(--muted); font-weight:700; font-size:13px; cursor:pointer;
+      transition: background .15s, color .15s;
     }
+    .tab:hover{background:rgba(255,255,255,.08); color:var(--txt)}
     .tab.active{
       background:rgba(106,167,255,.18);
       border-color:rgba(106,167,255,.35);
       color:var(--txt);
     }
 
+    /* ---- CARD ---- */
     .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.05), transparent 60%), var(--card);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:14px;
-      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      background:linear-gradient(180deg,rgba(255,255,255,.05),transparent 60%), var(--card);
+      border:1px solid var(--border); border-radius:18px;
+      padding:18px; box-shadow:0 10px 30px rgba(0,0,0,.25);
     }
-
     .hidden{display:none !important;}
-
     label{display:block; font-size:13px; color:var(--muted); margin:10px 0 6px}
-    textarea, input, select{
-      width:100%;
-      padding:12px 12px;
-      background:var(--card2);
-      color:var(--txt);
-      border:1px solid var(--border);
-      border-radius:12px;
-      outline:none;
-      font-size:14px;
+    textarea, input[type="text"], select{
+      width:100%; padding:12px; background:var(--card2); color:var(--txt);
+      border:1px solid var(--border); border-radius:12px; outline:none; font-size:14px;
     }
-    textarea{min-height:150px; resize:vertical; line-height:1.25}
+    textarea{min-height:150px; resize:vertical; line-height:1.35}
     button{
-      width:100%;
-      padding:12px 14px;
-      background:rgba(106,167,255,.22);
-      border:1px solid rgba(106,167,255,.35);
-      color:var(--txt);
-      border-radius:14px;
-      font-weight:800;
-      font-size:15px;
-      margin-top:12px;
+      padding:11px 18px; background:rgba(106,167,255,.22);
+      border:1px solid rgba(106,167,255,.35); color:var(--txt);
+      border-radius:14px; font-weight:700; font-size:14px;
+      cursor:pointer; transition:background .15s;
     }
-    .note{color:var(--muted); font-size:13px; line-height:1.35; margin-top:10px}
+    button:hover{background:rgba(106,167,255,.35)}
+    .btn-full{width:100%; margin-top:10px}
+    .note{color:var(--muted); font-size:13px; line-height:1.45; margin-top:10px}
+
+    /* ---- DATE ROW ---- */
+    .date-row{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; align-items:center}
+    input[type="date"]{
+      padding:10px 14px; background:var(--card2); color:var(--txt);
+      border:1px solid var(--border); border-radius:12px; outline:none;
+      font-size:14px; flex:1; min-width:160px;
+      color-scheme: dark;
+    }
+
+    /* ---- PROGRAMME LIST ---- */
+    .prog-title{font-size:15px; font-weight:700; color:var(--accent); margin:0 0 14px}
+    .reunion-block{margin-bottom:18px}
+    .reunion-header{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:8px; padding-bottom:6px;
+      border-bottom:1px solid var(--border);
+    }
+    .hippo-name{font-weight:800; font-size:16px}
+    .reunion-num{font-size:12px; color:var(--muted); background:var(--card2);
+      padding:3px 9px; border-radius:999px; border:1px solid var(--border)}
+
+    .course-row{
+      display:flex; flex-direction:column; gap:6px;
+      padding:12px 14px; border-radius:12px; margin-bottom:6px;
+      border:1px solid var(--border); background:rgba(255,255,255,.02);
+      cursor:pointer; transition:background .15s, border-color .15s;
+    }
+    .course-row:hover{background:rgba(255,255,255,.06); border-color:rgba(106,167,255,.3)}
+    .course-row.quinte{
+      background:rgba(106,167,255,.08);
+      border-color:rgba(106,167,255,.35);
+      box-shadow:0 0 0 1px rgba(106,167,255,.15);
+    }
+    .course-row.quinte:hover{background:rgba(106,167,255,.16)}
+
+    .course-info{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+    .course-num{font-size:12px; color:var(--muted); background:var(--card2);
+      padding:2px 8px; border-radius:999px; border:1px solid var(--border)}
+    .course-libelle{font-weight:600; font-size:14px}
+    .badge-quinte{
+      font-size:11px; font-weight:800; letter-spacing:.06em;
+      background:rgba(106,167,255,.25); color:var(--accent);
+      border:1px solid rgba(106,167,255,.4);
+      padding:2px 10px; border-radius:999px;
+    }
+    .course-meta{display:flex; gap:12px; font-size:12px; color:var(--muted); flex-wrap:wrap}
+
+    /* ---- ANALYSIS ---- */
+    .back-btn{
+      display:inline-flex; align-items:center; gap:6px;
+      margin-bottom:16px; padding:8px 16px;
+      background:rgba(255,255,255,.06); border:1px solid var(--border);
+      border-radius:999px; font-size:13px; font-weight:600; cursor:pointer;
+    }
+    .back-btn:hover{background:rgba(255,255,255,.12)}
+
+    .analysis-header{margin-bottom:16px}
+    .race-meta-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .meta-chip{
+      font-size:12px; padding:4px 10px;
+      background:rgba(255,255,255,.06); border:1px solid var(--border);
+      border-radius:999px; color:var(--muted);
+    }
+    .terrain-chip{color:var(--txt); font-weight:600}
+
+    .chaos-block{
+      padding:14px 16px; border-radius:12px; margin-bottom:14px;
+      background:rgba(255,255,255,.03); border:1px solid var(--border);
+    }
+    .library-block{
+      padding:12px 16px; border-radius:12px; margin-bottom:14px;
+      background:rgba(106,167,255,.05); border:1px solid rgba(106,167,255,.15);
+    }
+    .selection-block{
+      display:flex; gap:16px; flex-wrap:wrap;
+      padding:14px 16px; border-radius:12px; margin-bottom:16px;
+      background:rgba(255,255,255,.03); border:1px solid var(--border);
+    }
+    .sel-section{flex:1; min-width:160px}
+    .sel-label{font-size:11px; font-weight:800; letter-spacing:.07em; margin-bottom:8px}
+    .horse-chip{
+      display:inline-block; margin:3px 4px 3px 0;
+      padding:5px 12px; border-radius:999px; font-size:13px; font-weight:600;
+      border:1px solid var(--border);
+    }
+    .horse-chip.base{background:rgba(107,203,119,.18); border-color:rgba(107,203,119,.4); color:var(--green)}
+    .horse-chip.outsider{background:rgba(255,217,61,.12); border-color:rgba(255,217,61,.35); color:var(--yellow)}
+
+    /* ---- HORSE CARD ---- */
+    .horse-card{
+      padding:14px; border-radius:14px; margin-bottom:10px;
+      background:rgba(255,255,255,.02); border:1px solid var(--border);
+      transition:border-color .15s;
+    }
+    .horse-card.is-base{border-color:rgba(107,203,119,.35); background:rgba(107,203,119,.04)}
+    .horse-card.is-outsider{border-color:rgba(255,217,61,.3); background:rgba(255,217,61,.03)}
+
+    .horse-header{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px}
+    .horse-num{
+      width:34px; height:34px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; font-size:15px;
+      background:rgba(106,167,255,.18); border:1px solid rgba(106,167,255,.3);
+      color:var(--accent); flex-shrink:0;
+    }
+
+    .horse-data{
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(100px,1fr));
+      gap:8px; margin-bottom:10px;
+    }
+    .data-item{
+      background:var(--card2); border-radius:8px;
+      padding:6px 10px; font-size:13px;
+      border:1px solid var(--border);
+    }
+    .di-label{display:block; font-size:10px; color:var(--muted); margin-bottom:2px; letter-spacing:.05em; text-transform:uppercase}
+
+    .musique-row{
+      font-size:13px; padding:8px 12px;
+      background:var(--card2); border-radius:8px;
+      border:1px solid var(--border); margin-bottom:8px;
+      word-break:break-all; line-height:1.6;
+    }
+    .form-badge{
+      display:inline-block; font-size:11px; padding:2px 8px;
+      border-radius:999px; border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+    }
+
+    .score-bar-wrap{height:4px; background:rgba(255,255,255,.08); border-radius:2px; margin:6px 0}
+    .score-bar{height:4px; border-radius:2px; transition:width .4s}
+
+    .alert-row{
+      font-size:12px; color:var(--orange); padding:6px 10px;
+      background:rgba(255,159,67,.08); border-radius:8px;
+      border:1px solid rgba(255,159,67,.2); margin-bottom:6px;
+    }
+    .interview-block{
+      padding:10px 12px; border-radius:10px; margin-top:8px;
+      background:rgba(106,167,255,.06); border:1px solid rgba(106,167,255,.2);
+      font-size:13px; line-height:1.5;
+    }
+
+    /* ---- STATES ---- */
+    .loading, .error{
+      padding:24px; text-align:center; border-radius:12px;
+      border:1px solid var(--border); font-size:14px; color:var(--muted);
+    }
+    .error{color:var(--red); border-color:rgba(255,107,107,.25); background:rgba(255,107,107,.06)}
+
+    /* ---- SECTION TITLE ---- */
+    .section-title{
+      font-size:11px; font-weight:800; letter-spacing:.08em;
+      text-transform:uppercase; color:var(--accent); margin:0 0 10px;
+    }
+
+    @media(max-width:600px){
+      h1{font-size:28px}
+      .selection-block{flex-direction:column}
+      .horse-data{grid-template-columns:repeat(2,1fr)}
+    }
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <h1>PMU — Assistant</h1>
-    <p class="sub">Choisis ce que tu veux faire : Bibliothèque / Assistant / Grille.</p>
+    <p class="sub">Analyse automatique du Quinté+ · Bibliothèque · Grille.</p>
 
     <div class="tabs">
-      <button class="tab active" id="tab-home" type="button">🏠 Accueil</button>
-      <button class="tab" id="tab-biblio" type="button">📚 Bibliothèque</button>
-      <button class="tab" id="tab-assistant" type="button">🤖 Assistant (coller conditions)</button>
-      <button class="tab" id="tab-grille" type="button">🧾 Grille / Sélection</button>
+      <button class="tab active" id="tab-home"      type="button">🏠 Accueil</button>
+      <button class="tab"        id="tab-quinte"    type="button">🏇 Quinté+</button>
+      <button class="tab"        id="tab-biblio"    type="button">📚 Bibliothèque</button>
+      <button class="tab"        id="tab-assistant" type="button">🤖 Assistant</button>
+      <button class="tab"        id="tab-grille"    type="button">🧾 Grille</button>
     </div>
 
     <!-- HOME -->
     <section class="card" id="view-home">
-      <h2 style="margin:0 0 8px;">Accueil</h2>
-      <p class="note" style="margin:0;">
-        1) <b>Bibliothèque</b> = choisir hippodrome / parcours (tes fiches).<br>
-        2) <b>Assistant</b> = coller les conditions → chaos + scénario automatiques.<br>
-        3) <b>Grille</b> = coller partants + notes → base / chances / outsiders.
+      <h2 style="margin:0 0 10px">Accueil</h2>
+      <p class="note" style="margin:0">
+        🏇 <b>Quinté+</b> — Sélectionne une date, clique sur la course → analyse complète automatique
+        (historique, musique, poids, terrain, corde, interviews, sélection).<br><br>
+        📚 <b>Bibliothèque</b> — Fiches hippodrome / parcours (conditions d'engagement, notes tactiques).<br><br>
+        🤖 <b>Assistant</b> — Colle les conditions manuellement → chaos + scénario.<br><br>
+        🧾 <b>Grille</b> — Partants + critères → base / chances / outsiders.
       </p>
     </section>
 
-    <!-- BIBLIO (placeholder si tu as déjà une page biblio, colle ton bloc ici) -->
+    <!-- QUINTÉ+ -->
+    <section class="card hidden" id="view-quinte">
+      <h2 style="margin:0 0 14px">🏇 Quinté+ — Analyse automatique</h2>
+      <div class="date-row">
+        <input type="date" id="quinteDate" />
+        <button id="loadProgramBtn" type="button">Charger le programme</button>
+      </div>
+      <div id="quinteOut"></div>
+    </section>
+
+    <!-- BIBLIOTHÈQUE -->
     <section class="card hidden" id="view-biblio">
-      <h2 style="margin:0 0 8px;">Bibliothèque</h2>
-      <p class="note" style="margin:0;">
-        Ici tu remettras ta bibliothèque (menus déroulants Attelé/Plat/Obstacles → Hippodrome → Parcours).
-      </p>
+      <h2 style="margin:0 0 12px">Bibliothèque</h2>
+      <div class="date-row" style="margin-bottom:12px">
+        <select id="biblioType"><option value="">Discipline…</option></select>
+        <select id="biblioHippo"><option value="">Hippodrome…</option></select>
+      </div>
+      <div id="biblioOut" class="note">Sélectionne une discipline et un hippodrome.</div>
     </section>
 
     <!-- ASSISTANT -->
     <section class="card hidden" id="view-assistant">
-      <h2 style="margin:0 0 8px;">Assistant : conditions → chaos/scénario</h2>
-      <label>Colle les conditions de course (copié PMU/Geny)</label>
-      <textarea id="raceText" placeholder="Colle ici le texte complet de la course..."></textarea>
-      <button id="analyzeBtn" type="button">Analyser (auto)</button>
-      <button id="resetBtn" type="button">Réinitialiser</button>
+      <h2 style="margin:0 0 10px">Assistant — coller les conditions</h2>
+      <label>Colle les conditions de course (copié PMU / Geny)</label>
+      <textarea id="raceText" placeholder="Colle ici le texte complet de la course…"></textarea>
+      <button class="btn-full" id="analyzeBtn" type="button">Analyser</button>
+      <button class="btn-full" id="resetBtn" type="button" style="margin-top:6px;background:rgba(255,255,255,.05)">Réinitialiser</button>
       <div id="assistantOut" class="note"></div>
     </section>
 
-    <!-- GRILLE (placeholder, si tu as déjà la grille, colle ton bloc ici) -->
+    <!-- GRILLE -->
     <section class="card hidden" id="view-grille">
-      <h2 style="margin:0 0 8px;">Grille / Sélection</h2>
-      <p class="note" style="margin:0;">
-        Ici tu remettras la grille (partants + critères) — ou on la branche après.
-      </p>
+      <h2 style="margin:0 0 10px">Grille / Sélection</h2>
+      <p class="note" style="margin:0">Grille en cours d'intégration — utilise l'onglet Quinté+ pour l'analyse automatique.</p>
     </section>
   </div>
 
   <script src="./app.js" defer></script>
-
-  <script>
-    // Tabs / navigation simple
-    const tabs = [
-      ["tab-home","view-home"],
-      ["tab-biblio","view-biblio"],
-      ["tab-assistant","view-assistant"],
-      ["tab-grille","view-grille"],
-    ];
-
-    function show(viewId, tabId){
-      for(const [t,v] of tabs){
-        document.getElementById(v).classList.toggle("hidden", v !== viewId);
-        document.getElementById(t).classList.toggle("active", t === tabId);
-      }
-      // option: on remonte en haut
-      window.scrollTo({top:0, behavior:"smooth"});
-    }
-
-    document.getElementById("tab-home").addEventListener("click", ()=>show("view-home","tab-home"));
-    document.getElementById("tab-biblio").addEventListener("click", ()=>show("view-biblio","tab-biblio"));
-    document.getElementById("tab-assistant").addEventListener("click", ()=>show("view-assistant","tab-assistant"));
-    document.getElementById("tab-grille").addEventListener("click", ()=>show("view-grille","tab-grille"));
-
-    // Toujours démarrer sur Accueil
-    show("view-home","tab-home");
-  </script>
 </body>
 </html>
